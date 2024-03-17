@@ -1,0 +1,35 @@
+class Solution{
+  public:
+    // your task is to complete this function
+    int countPairs(struct Node* head1, struct Node* head2, int x) 
+    {
+        int count = 0;
+        
+        set<int> sets;
+        
+        Node* temp = head1;
+        
+        while(temp != NULL)
+        {
+            // Code her
+            sets.insert(temp -> data);
+            temp = temp -> next;
+        }
+        
+        temp = head2;
+        
+        while(temp != NULL)
+        {
+            int data = temp -> data;
+            int ans = (x -  data);
+            
+            if(sets.find(ans) != sets.end())
+            {
+                count++;
+            }
+            
+            temp = temp -> next;
+        }
+        return count;
+    }
+};
