@@ -1,0 +1,55 @@
+class Solution
+{
+public:
+    
+    int result=0, maxhight=0;
+    void solve(Node* root,int hight,int sum)
+    {
+        if(!root)
+            return;
+        if(!root->left && !root->right)
+        {
+            sum += root->data;
+            if(hight > maxhight){
+                result = sum;
+                maxhight = hight;
+            }
+            else if(hight == maxhight)
+                result=max(result, sum);
+        
+        return;
+        }
+        
+        sum += root->data;
+        solve(root->left, hight+1, sum);
+        solve(root->right, hight+1, sum);
+        return;
+    }
+
+  int sumOfLongRootToLeafPath(Node *root) 
+  {
+      if (root == NULL) return 0;
+  
+      int maxi = 0;
+      int sum = 0;
+      
+      solve(root, maxi, sum);
+      
+      return result;
+  }
+};
+
+approach --> 
+ The code is trying to find the sum of the longest path from the root node to a leaf node in a binary tree.
+ It does this by recursively traversing through each node and keeping track of the current height and sum along that path.
+ First, it checks if the current node is null, which means we have reached the end of a branch and can return without doing anything.
+ Next, it checks if both left and right child nodes are null, meaning we have reached a leaf node.
+ In this case, it adds the data value of that leaf node to our running sum variable.
+ Then it compares the current height with the maximum height seen so far (initialized as 0).
+ If the current height is greater than maxheight, then we update result (which stores our final answer) with our new sum value for this particular path.
+ If they are equal, then we take whichever result has a higher value between them.
+ If neither condition above is met, then we continue traversing down both branches by calling solve() recursively on each child node.
+ We also increment hight by 1 since we are moving down one level in our tree structure.
+ Once all recursive calls have finished executing for all possible paths from root to leaf nodes, we return result which will contain our desired answer - i.e., sum of longest path from root to any leaf in given binary tree.
+ This code makes use of recursion - where a function calls itself until some base case or termination condition is met - which allows us to
+ The code attempts to find the sum of the longest root to leaf path in a binary tree and return it as the result.
