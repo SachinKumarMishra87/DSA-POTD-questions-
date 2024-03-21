@@ -1,0 +1,71 @@
+class Solution{
+    public:
+    //Function to store the zig zag order traversal of tree in a list.
+    vector <int> zigZagTraversal(Node* root)
+    {
+    	// Code here
+    	 vector<int> result;
+        if (root == NULL)
+            return result;
+
+        queue<Node *> q;
+        q.push(root);
+
+        bool leftToRight = true;
+
+        while (!q.empty())
+        {
+
+            int size = q.size();
+            vector<int> ans(size);
+
+            // Level Process
+            for (int i = 0; i < size; i++)
+            {
+
+                Node *frontNode = q.front();
+                q.pop();
+
+                // normal insert or reverse insert
+                int index = leftToRight ? i : size - i - 1;
+                ans[index] = frontNode->data;
+
+                if (frontNode->left)
+                    q.push(frontNode->left);
+
+                if (frontNode->right)
+                    q.push(frontNode->right);
+            }
+
+            // direction change karni h
+            leftToRight = !leftToRight;
+
+            for (auto i : ans)
+            {
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
+
+
+approach --> 
+ 
+ The given code is for performing a zigzag traversal on a binary tree.
+ Zigzag traversal means that the nodes at each level are visited in an alternating fashion, starting from left to right and then right to left.
+ To perform this traversal, we first create an empty vector called "result" which will store the final output of the traversal.
+ Then, we check if the root node is NULL or not.
+ If it is NULL, then there are no elements in the tree and we simply return the empty result vector.
+ Next, we create a queue data structure using STL library which will help us in traversing through all the nodes of the tree.
+ We push the root node into this queue as our starting point.
+ We also have a boolean variable called "leftToRight" which keeps track of whether we need to visit nodes from left to right or from right to left.
+ This variable is initially set to true since our first level needs to be visited from left to right.
+ Now comes the main part of our algorithm - while loop.
+ This loop runs until our queue becomes empty i.e., all nodes have been visited and processed.
+ Inside this loop, we first find out how many elements are currently present in our queue (using size() function).
+ This number represents how many nodes are present at that particular level.
+ Then, we create another vector called "ans" with size equal to number of elements present in current level (size variable).
+ This vector will store all values at current level before they get pushed
+ The code attempts to perform a zigzag traversal of a binary tree, starting from the root node and traversing each level alternately from left to right and right to left.
+ The function returns a vector containing the values of the nodes in the order they are visited during the traversal.
