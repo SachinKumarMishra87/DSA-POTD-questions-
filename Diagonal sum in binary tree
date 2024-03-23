@@ -1,0 +1,44 @@
+
+class Solution
+{
+    public:
+     void solve(Node*root, map<int,int>&mp, int level){
+        if(!root) return;
+        mp[level]+=root->data;
+        
+        solve(root->left, mp, level+1);
+        solve(root->right, mp, level);
+        
+        return;
+    }
+    
+    vector <int> diagonalSum(Node* root) {
+        // Add your code here
+        map<int,int>mp;
+        solve(root, mp, 0);
+        vector<int>ans;
+        for(auto it:mp){
+            ans.push_back(it.second);
+        }
+        return ans;
+        
+    }
+};
+
+
+approach -> 
+
+ The given code is used to find the diagonal sum of a binary tree.
+ It takes in a root node as input and returns a vector containing the diagonal sums.
+ First, we create an empty map called "mp" which will store the level-wise sum of nodes in the tree.
+ Then, we call the solve function passing in three parameters - root node, map mp and initial level 0.
+ Inside the solve function, we first check if the root node is null.
+ If it is null, then there are no more nodes left to traverse so we simply return from this recursive call.
+ Next, we add the data value of current node to its corresponding level key in our map "mp".
+ This means that for each level (starting from 0), we keep adding up all values at that particular level.
+ Then, recursively call solve on both left and right subtrees with updated levels (level+1 for left subtree and same level for right subtree).
+ Finally, after traversing through all nodes in our tree using recursion, we have stored all diagonal sums in our map "mp".
+ We iterate over this map using a range-based loop and push back all values into our answer vector "ans".
+ In terms of programming concepts used here: - Recursion: The use of recursive calls inside solve() function helps us traverse through every single node present in our binary tree.
+ - Maps: A map data structure has been used here to store key-value pairs where keys represent different levels while values represent their respective sums
+ The code attempts to calculate the diagonal sum of a binary tree and return a vector containing the sums for each diagonal level.
