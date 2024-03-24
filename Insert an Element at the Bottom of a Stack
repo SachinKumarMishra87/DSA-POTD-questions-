@@ -27,3 +27,22 @@ public:
         
     }
 };
+approach --> 
+
+ The code is trying to insert an element at the bottom of a stack.
+ It does this by using two stacks - one for temporary storage and one for the final result.
+ First, it creates a new empty stack called "sat" which will be used for temporary storage.
+ Then, it enters a while loop that runs as long as the original stack "st" is not empty.
+ Inside the loop, it first gets the top element from "st" and stores it in a variable called "top".
+ Then, it removes this top element from "st" using the pop() function.
+ Next, it pushes this top element onto the temporary stack "sat".
+ This effectively reverses all elements in "st", with the last element becoming first and so on.
+ The if statement checks if there are no more elements left in "st", meaning we have reached its bottom.
+ If that's true, then we push our desired value x onto sat.
+ Once all elements have been transferred to sat (with x now being at its bottom), we enter another while loop that runs until sat is also empty.
+ Inside this loop, we get each top element from sat and store it in a variable called "top".
+ Then, we remove this top element from sat using pop().
+ Finally, we push this stored value back onto st.
+ This effectively transfers all elements back to st but with x now being at its bottom instead of its original position at the top.
+ The main concept used here is recursion - calling a function within
+ The code inserts an integer x at the bottom of the given stack st and returns the updated stack.
