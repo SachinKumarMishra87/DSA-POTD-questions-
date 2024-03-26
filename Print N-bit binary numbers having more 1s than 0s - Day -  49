@@ -1,0 +1,37 @@
+class Solution{
+public:    
+ void solve(int n, string k, int index, int zeroes, int ones, vector<string>& result) {
+    if (index == n) {
+        result.push_back(k);
+        return;
+    }
+    solve(n, k + '1', index + 1, zeroes, ones + 1, result);
+    if (zeroes < ones) {
+        solve(n, k + '0', index + 1, zeroes + 1, ones, result);
+    }
+}
+
+vector<string> NBitBinary(int n) {
+    vector<string> result;
+    string k = "1";
+    solve(n, k, 1, 0, 1, result);
+    sort(result.begin(), result.end(), greater<string>());
+    return result;
+}
+};
+
+ approach --> 
+
+ The code is trying to generate all possible n-bit binary numbers with a specific pattern.
+ It starts by creating an empty vector called "result" which will store all the generated binary numbers.
+ Then, it defines a string variable "k" and sets its initial value to be "1".
+ This string will be used as a base for generating other binary numbers.
+ Next, the function "solve" is defined which takes in five parameters: n (the number of bits), k (the current binary number being generated), index (to keep track of the position in the binary number being generated), zeroes (number of 0s already present in k) and ones (number of 1s already present in k).
+ The purpose of this function is to recursively generate all possible combinations of n-bit binary numbers based on certain conditions.
+ Inside the solve function, there is a base case where if the index reaches n, it means that we have successfully created an n-bit binary number and hence we can add it to our result vector.
+ Then, there are two recursive calls inside solve.
+ The first one appends '1' at the end of k and increments both index and ones by 1.
+ This represents adding another '1' bit at the end of our current binary number.
+ The second recursive call checks if there are more zeros than ones currently present in k. If yes, then it appends '0' at the end of k and increments both index and zeroes by 1.
+ This represents adding
+ The code generates all possible combinations of binary numbers with n digits, starting with 1, and stores them in a vector in descending order.
