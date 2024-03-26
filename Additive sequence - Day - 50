@@ -1,0 +1,117 @@
+class Solution {
+  public:
+  string addStrings(string num1, string num2) {
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+
+        string res="";
+        int i=0;
+        int carry=0;
+        while(i<min(num1.length(), num2.length())){
+            int x=carry;
+            x+=num1[i]-'0';
+            x+=num2[i]-'0';
+            carry=x/10;
+            x=x%10;
+            res=res+to_string(x);
+            i++;
+        }
+        while(i<num1.length()){
+            int x=carry;
+            x+=num1[i]-'0';
+            // x+=num2[i]-'0';
+            carry=x/10;
+            x=x%10;
+            res=res+to_string(x);
+            i++;
+        }
+        while(i<num2.length()){
+            int x=carry;
+            // x+=num1[i]-'0';
+            x+=num2[i]-'0';
+            carry=x/10;
+            x=x%10;
+            res=res+to_string(x);
+            i++;
+        }
+        while(carry){
+            int x=carry;
+            carry=x/10;
+            x=x%10;
+            res=res+to_string(x);
+        }
+        reverse(res.begin(), res.end());
+
+        return res;
+
+    }
+    bool isAdditiveSequence(string num) {
+        // Your code here
+        int n=num.length();
+        if(n<3) return false;
+        for(int i=1;i<=n/2;i++){
+            for(int j=1;max(i,j)<=n-i-j;j++){
+                string first=num.substr(0,i);
+                string second=num.substr(i,j);
+                
+                if(first.length()>1 && first[i]=='0'){
+                    break;
+                }
+                if(second.length()>1 && second[i]=='0'){
+                    break;
+                }
+                
+                int start=i+j;
+                string sum;
+                while(start<n){
+                    sum=addStrings(first, second);
+                    if(start+sum.length()>n || sum!=num.substr(start, sum.length())){
+                        break;
+                    }
+                    first=second;
+                    second=sum;
+                    start+=sum.length();
+                }
+                if(start==n){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+Question ->
+
+Given a string n, your task is to find whether it contains an additive sequence or not. A string n contains an additive sequence if its digits can make a sequence of numbers in which every number is addition of previous two numbers. You are required to complete the function which returns true if the string is a valid sequence else returns false. For better understanding check the examples.
+
+Note: A valid string should contain at least three digit to make one additive sequence. 
+
+Example 1:
+Input:  
+n = "1235813"
+Output: 
+1
+Explanation: 
+The given string can be splited into a series of numbers  
+where each number is the sum of the previous two numbers: 
+1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8, and 5 + 8 = 13. Hence, the output would be 1 (true).
+
+approach --:
+
+ The code is trying to check if a given string follows the additive sequence pattern.
+ An additive sequence is a series of numbers where each number in the series is formed by adding the previous two numbers.
+ To do this, we first reverse both strings so that we can start from the least significant digit and move towards the most significant digit.
+ Then, we initialize an empty string called "res" which will store our final result.
+ Next, we use a while loop to iterate through both strings at the same time until one of them ends.
+ We also keep track of any carryover digits using a variable called "carry".
+ Inside this loop, we add up all three digits (the current digit from num1, current digit from num2 and any carryover) and then update our carry variable accordingly.
+ The sum obtained after adding these three digits is then appended to our result string.
+ After this while loop finishes executing, there might be some remaining digits in either num1 or num2 that were not added yet because one of them ended before the other.
+ So we use two more while loops to add those remaining digits as well.
+ Finally, if there are still any leftover carryover digits left after all iterations have finished executing, they are also added to our result string.
+ Once everything has been added successfully and no more carryovers remain, we simply reverse our result string again (since it was reversed earlier) and return it as output.
+ The next function checks whether a given input string follows an additive sequence pattern or
+ The code checks if the given string is an additive sequence, which means that each number in the sequence is the sum of the two previous numbers.
+ It does this by iterating through all possible combinations of two numbers in the string and checking if the remaining part of the string can be formed by adding these two numbers.
+ If it can, then it returns true, otherwise it returns false.
