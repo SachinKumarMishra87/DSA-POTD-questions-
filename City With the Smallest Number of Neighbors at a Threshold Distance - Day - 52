@@ -1,0 +1,114 @@
+
+/* 
+------------------------------------------------------------------------------------------------------------------------->
+Question -> 
+------------------------------------------------------------------------------------------------------------------------->
+
+There are n cities labeled from 0 to n-1 with m edges connecting them. Given the array edges where edges[i] = [fromi , toi ,weighti]  represents a bidirectional and weighted edge between cities fromi and toi, and given the integer distanceThreshold. You need to find out a city with the smallest number of cities that are reachable through some path and whose distance is at most Threshold Distance. If there are multiple such cities, our answer will be the city with the greatest label.
+
+Note: The distance of a path connecting cities i and j is equal to the sum of the edge's weights along that path.
+
+Example 1:
+
+Input:
+n = 4, m = 4
+edges = [[0, 1, 3],
+         [1, 2, 1], 
+         [1, 3, 4],  
+         [2, 3, 1]]
+distanceThreshold = 4
+Output:
+3
+Explaination:
+
+The neighboring cities at a distanceThreshold = 4 for each city are:
+City 0 -> [City 1, City 2] 
+City 1 -> [City 0, City 2, City 3] 
+City 2 -> [City 0, City 1, City 3] 
+City 3 -> [City 1, City 2] 
+Cities 0 and 3 have 2 neighboring cities at a distanceThreshold = 4, but we have to return city 3 since it has the greatest number.*/
+
+------------------------------------------------------------------------------------------------------------------------------------->
+
+
+class Solution {
+  public:
+    int dijkstra(int n, vector<pair<int, int>> adj[], int k, int src) {
+        priority_queue<int> q;
+        q.push(src);
+
+        // Initializing a vector to store the minimum distance from the source
+        vector<int> dist(n, INT_MAX);
+        dist[src] = 0;
+
+        while (!q.empty()) {
+            int node = q.top();
+            q.pop();
+
+            for (auto x : adj[node]) {
+                int nbr = x.first;
+                int wt = x.second;
+                if (dist[nbr] > dist[node] + wt) {
+                    dist[nbr] = dist[node] + wt;
+                    q.push(nbr);
+                }
+            }
+        }
+
+        int c = 0;
+        for (int i = 0; i < n; i++) {
+            if (dist[i] <= k)
+                c++;
+        }
+        return c;
+    }
+
+    int findCity(int n, int m, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<pair<int,int>> adj[n];
+
+        for (int i = 0; i < edges.size(); i++) {
+            adj[edges[i][0]].push_back({edges[i][1], edges[i][2]});
+            adj[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+        }
+
+        vector<int> dis(n, 0);
+
+        // Finding the number of cities within the distance threshold for each city
+        for (int i = 0; i < n; i++) {
+            dis[i] = dijkstra(n, adj, distanceThreshold, i);
+        }
+
+        int ans = INT_MAX;
+        int idx = -1;
+        for (int i = 0; i < n; i++) {
+            if (ans >= dis[i]) {
+                ans = dis[i];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+};
+
+--------------------------------------------------------------------------------------------------------------------->
+approach ->
+
+Graph Representation: The input graph is represented using an adjacency list. Each node is associated with a list of its neighboring nodes along with the weight of the edges connecting them.
+
+Dijkstra's Algorithm: The dijkstra function implements Dijkstra's algorithm to find the shortest distances from a given source node to all other nodes in the graph. It initializes a priority queue to store nodes ordered by their distances from the source. The priority queue is initialized with the source node having distance 0. At each step, it extracts the node with the smallest distance from the priority queue and relaxes its neighboring nodes if a shorter path is found. This process continues until the priority queue becomes empty.
+
+Counting Cities within Threshold: Within the dijkstra function, the number of cities within the given distance threshold (k) from the source node is counted. This count is maintained in the variable c.
+
+Finding City with Maximum Reachable Cities: The findCity function iterates over all nodes in the graph. For each node, it calculates the number of cities reachable within the distance threshold using the dijkstra function. It keeps track of the maximum count and the corresponding node index. Finally, it returns the index of the node with the maximum count of reachable cities.
+
+Complexity Analysis:
+
+Time Complexity: The time complexity of Dijkstra's algorithm is O((V + E) log V), where V is the number of vertices and E is the number of edges. Since the dijkstra function is called for each node in the graph, the overall time complexity of the solution is O(V(V + E) log V).
+Space Complexity: The space complexity is O(V + E) for storing the graph using an adjacency list and additional space for the priority queue and distance array used in Dijkstra's algorithm.
+Potential Optimization: If the graph is sparse (i.e., E is much less than V^2), you could use a more efficient implementation of Dijkstra's algorithm, such as Dijkstra's algorithm with a Fibonacci heap or using adjacency matrices instead of adjacency lists for better performance. Additionally, if the distance threshold (k) is small relative to the maximum edge weight, you might be able to optimize the distance calculation to avoid unnecessary iterations.
+
+
+
+
+
+
