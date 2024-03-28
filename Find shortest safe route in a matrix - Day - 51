@@ -1,0 +1,101 @@
+----------------------------------------------------------------------------------------------------------------->
+Question -> Find shortest safe route in a matrix
+/*
+Given a matrix mat[][] with r rows and c columns, where some cells are landmines (marked as 0) and others are safe to traverse. Your task is to find the shortest safe route from any cell in the leftmost column to any cell in the rightmost column of the mat. You cannot move diagonally, and you must avoid both the landmines and their adjacent cells (up, down, left, right), as they are also unsafe.
+
+Example 1:
+
+Input:
+mat = [1, 0, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 0, 1],
+      [1, 1, 1, 1, 0]
+Output: 
+6
+Explanation: 
+We can see that length of shortest
+safe route is 6
+[1 0 1 1 1]
+[1 1 1 1 1]
+[1 1 1 1 1]
+[1 1 1 0 1] 
+[1 1 1 1 0]
+*/
+----------------------------------------------------------------------------------------------------------------->
+
+class Solution
+{
+public:
+bool isSafe(int r, int c, vector<vector<int>> &mat){
+        int n = mat.size();
+        int m = mat[0].size();
+        
+        if(r<0 || r>=n || c<0 || c>=m || mat[r][c]==0) return false;
+        if(r-1>=0 && mat[r-1][c]==0) return false;
+        if(r+1<n && mat[r+1][c]==0) return false;
+        if(c-1>=0 && mat[r][c-1]==0) return false;
+        if(c+1<m && mat[r][c+1]==0) return false;
+        
+        return true;
+    }
+    
+    int dfs(int r, int c, vector<vector<int>> &mat, vector<vector<int>> &vis){
+        if(c == mat[0].size()-1) return 0;
+        
+        vis[r][c] = 1;
+        int ans = 1e8;
+        
+        //up
+        if(isSafe(r-1,c,mat) && !vis[r-1][c]){
+            ans = min(ans,1+dfs(r-1,c,mat,vis));
+        }
+        
+        //down
+        if(isSafe(r+1,c,mat) && !vis[r+1][c]){
+            ans = min(ans,1+dfs(r+1,c,mat,vis));
+        }
+        
+        //front
+        if(isSafe(r,c+1,mat) && !vis[r][c+1]){
+            ans = min(ans,1+dfs(r,c+1,mat,vis));
+        }
+        
+        vis[r][c] = 0;
+        return ans;
+    }
+    
+    int findShortestPath(vector<vector<int>> &mat)
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+        
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        int ans = 1e8;
+        for(int i=0; i<n; i++){
+            if(isSafe(i,0,mat)){
+                ans = min(ans,1+dfs(i,0,mat,vis)); 
+            }
+        }
+        if(ans == 1e8) return -1;
+        return ans;
+    }
+};
+
+-------------------------------------------------------------------------------------------------------------------------->
+approach -> 
+
+ The given code is using the concept of Depth First Search (DFS) to find the shortest path in a matrix.
+ The input is a 2D vector representing the matrix, where each element can either be 0 or 1.
+ A value of 0 represents an obstacle and cannot be traversed, while a value of 1 represents an empty space that can be traversed.
+ The function "isSafe" checks if a given position in the matrix is safe to move into.
+ It takes in three parameters - row index, column index, and the matrix itself.
+ It first checks if the given indices are within bounds of the matrix and then checks if there is an obstacle at that position or not.
+ If any of these conditions are not met, it returns false indicating that it is not safe to move into that position.
+ The function "dfs" performs depth-first search starting from a given position (row and column indices).
+ It also takes two additional parameters - the original matrix and another visited array which keeps track of visited positions to avoid infinite loops.
+ The base case for this recursive function is when we reach the last column (c == mat[0].size()-1), meaning we have reached our destination on this particular path.
+ In this case, it returns 0 as no more steps need to be taken.
+ Otherwise, it marks current position as visited by setting vis[r][c] = 1 and initializes ans with a large value (infinite).
+ Then it recursively calls dfs for all
+ The code attempts to find the shortest path from the first column to the last column in a given matrix, where each cell represents a step and 0 represents an obstacle
