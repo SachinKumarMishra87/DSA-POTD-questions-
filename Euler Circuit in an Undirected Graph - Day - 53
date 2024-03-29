@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------------------------------->
+Question -> Euler Circuit in an Undirected Graph
+--------------------------------------------------------------------------------------------------------->
+
+class Solution {
+public:
+	bool isEularCircuitExist(int v, vector<int>adj[]){
+	    // Code here
+	     for(int i=0;i<v;i++)
+	     {
+	        if(int(adj[i].size())%2==1) return false;
+	    }
+	    
+	    return true;
+	}
+};
+--------------------------------------------------------------------------------------------------------->
+apprroach ->
+
+ The code is trying to determine if an Euler circuit exists in a given graph.
+ An Euler circuit is a path that visits every edge exactly once and ends at the starting vertex.
+ To do this, the code first checks each vertex in the graph (represented by 'v') and counts how many edges are connected to it.
+ If there are an odd number of edges connected to any vertex, then it means that there cannot be an Euler circuit because one edge will always be left unused.
+ Therefore, if any vertex has an odd number of edges connected to it, the function returns false immediately.
+ If all vertices have even numbers of edges connected to them, then we can say that there might exist an Euler circuit.
+ This is because for every time we enter a new node through one edge, we must leave through another edge so as not to repeat any paths or leave behind unvisited nodes.
+ Thus, if all vertices have even numbers of edges connected to them, then we can conclude that there exists some way for us to visit every single edge without leaving out any or repeating any.
+ Hence returning true would mean that yes indeed such a path does exist which covers all nodes and uses up all possible connections between them - i.e., an Eular Circuit!
+ The code checks if a given graph has an Euler circuit by iterating through each vertex and checking if the number of adjacent vertices is odd, returning false if it is and true otherwise.
