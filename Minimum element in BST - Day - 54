@@ -1,0 +1,68 @@
+-------------------------------------------------------------------------------------------->
+Question -> Minimum element in BST -> Besic level
+-------------------------------------------------------------------------------------------->
+class Solution
+{
+  public:
+  int solve(Node* &root, vector<int> &ans)
+  {
+      if(root == NULL)
+      {
+          return NULL;
+      }
+      
+      solve(root -> left, ans);
+      ans.push_back(root -> data);
+      solve(root -> right,ans); 
+  }
+    int minValue(Node* root)
+    {   
+        // Code here
+        vector<int> ans;
+        solve(root,ans);
+        return ans[0];
+
+    }
+};
+class Solution {
+  public:
+  int solve(Node* &root, vector<int> &ans)
+  {
+      if(root == NULL)
+      {
+          return NULL;
+      }
+      
+      solve(root -> left, ans);
+      ans.push_back(root -> data);
+      solve(root -> right,ans); 
+  }
+    int minValue(Node* root)
+    {   
+        // Code here
+        vector<int> ans;
+        solve(root,ans);
+        return ans[0];
+
+    }
+};
+-------------------------------------------------------------------------------------------->
+approach -> 
+
+     The code is trying to find the minimum value in a binary tree.
+     It takes in a root node and creates an empty vector called "ans" to store the values.
+     Then, it calls the function "solve" which takes in two parameters - the root node and the vector "ans".
+     The function first checks if the root is NULL, meaning there are no nodes in the tree.
+     If this is true, then it returns NULL.
+     If there are nodes present, then it recursively calls itself on each of its left and right child nodes.
+     This ensures that all nodes are visited in an inorder traversal manner (left subtree -> current node -> right subtree).
+     In each recursive call, it pushes the data of that particular node into the vector "ans".
+     This means that after all recursive calls have been made, we will have a sorted list of all values present in our binary tree.
+     Finally, when all recursive calls have been completed and we return back to our original call from main(), we can simply access ans[0] to get our minimum value as this would be at index 0 due to sorting.
+     This code makes use of recursion which is a programming concept where a function repeatedly calls itself until some base condition is met.
+     In this case, once we reach a leaf node (a node with no children), we stop making further recursive calls and start returning back up through previous levels until we reach our original call from main().
+     Another important concept used here is passing by reference.
+     When vectors or other
+     The code attempts to find the minimum value in a binary tree by traversing the tree in an inorder manner and storing the values in a vector, then returning the first element of the vector which will be the minimum value.
+
+-------------------------------------------------------------------------------------------->
