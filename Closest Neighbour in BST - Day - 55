@@ -1,0 +1,39 @@
+------------------------------------------------------------------------------------------------------------------------->
+Question -> Closest Neighbour in BST ??
+------------------------------------------------------------------------------------------------------------------------->
+
+class Solution {
+  public:
+int findMaxForN(Node* root, int n) {
+        if (root == nullptr)
+        {
+            return -1;
+        }
+        
+        if (root->key > n)
+        {
+            return findMaxForN(root->left, n); // Corrected to return the result of the recursive call
+        }
+        
+        int maxVal = findMaxForN(root->right, n); // Corrected to store the result of the recursive call
+        
+        if (maxVal != -1) {
+            return maxVal;
+        }
+        
+        return root->key;
+    }
+};
+
+------------------------------------------------------------------------------------------------------------------------->
+approach -> 
+         The code is trying to find the Closest Neighbour in a binary search tree that is smaller than a given number, n. It does this by recursively traversing through the tree and comparing each node's key with n. First, it checks if the root node is null.
+         If it is, then there are no values in the tree and -1 is returned as an error value.
+         Next, it compares the root node's key with n. If it is larger than n, then we know that all values on its right subtree will also be larger than n. Therefore, we can ignore the entire right subtree and focus on finding the maximum value in its left subtree by making a recursive call to findMaxForN() with root->left as the parameter.
+         If root->key <= n, then we know that there may be a larger value in its right subtree that satisfies our condition (being smaller than n).
+         So we make another recursive call to findMaxForN() but this time passing in root->right as the parameter.
+         The result of this second recursive call will either return -1 (if there are no values smaller than n) or return a valid maximum value from its right subtree.
+         We store this result into maxVal variable and check if it's not equal to -1.
+         If it isn't equal to -1, then we have found our desired maximum value and simply return maxVal without further processing.
+         However, if maxVal equals -1 (meaning there were no values smaller
+         The code recursively searches for the largest value in a binary tree that is less than or equal to a given value n.
