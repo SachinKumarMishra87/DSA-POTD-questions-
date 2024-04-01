@@ -1,0 +1,113 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> 
+-------------------------------------------------------------------------------------------------------------------------------------->
+
+class Solution {
+  public:
+  long long int merge(vector<int>&arr, long long low, long long mid, long long high){
+        long long temp[high-low+1];
+        long long int k=0;
+        long long int i=low;
+        long long int j=mid+1;
+        long long int inv=0;
+        
+        while(i<=mid && j<=high){
+            if(arr[i]<=arr[j]){
+                temp[k++]=arr[i++];
+            }
+            else{
+                inv+= mid-i +1;
+                temp[k++]=arr[j++];
+            }
+        }
+        
+        while(i<=mid){
+            temp[k++]=arr[i++];
+        }
+        
+        while(j<=high){
+            temp[k++]=arr[j++];
+        }
+        
+        for(int x=low; x<=high; x++){
+            arr[x]=temp[x-low];
+        }
+        
+        return inv;
+    }
+    
+    long long int mergeSort(vector<int>&arr, long long int low, long long int high){
+        if(low>=high) return 0;
+        long long int inv=0;
+        
+        long long mid= (low+high)/2;
+        
+        inv += mergeSort(arr, low, mid);
+        inv += mergeSort(arr, mid+1, high);
+        inv += merge(arr, low, mid, high);
+        
+        return inv;
+    }
+
+    long long int inversionCount(vector<int>&arr, long long N)
+    {
+        // Your Code Here
+        
+        long long int ans= mergeSort(arr, 0, N-1);
+        
+        return ans;
+        
+        
+    }
+
+    void inorder(Node*root, vector<int>&arr){
+        if(root){
+            inorder(root->left, arr);
+            arr.push_back(root->data);
+            inorder(root->right, arr);
+        }
+        return;
+    }
+
+    /*You are required to complete below function */
+    int pairsViolatingBST(int n, Node *root) {
+        // your code goes here
+        // store inorder traversal
+        vector<int>arr;
+        inorder(root, arr);
+        
+        // i just want to retun count inversion of arr
+        long long N=n;
+        return int(inversionCount(arr, N));
+        
+    }
+};
+
+-------------------------------------------------------------------------------------------------------------------------------------->
+approach -> 
+          Inorder Traversal to Obtain Sorted Array:
+          
+          Traverse the BST in inorder (left, root, right) manner.
+          Store the elements in an array.
+          This step ensures that the elements are stored in sorted order.
+          Count Inversions:
+          
+          Use a modified merge sort algorithm to count inversions while sorting the array.
+          During the merge step of merge sort:
+          Whenever an element from the right subarray is chosen over an element from the left subarray, count inversions.
+          The number of inversions at any step is the number of elements remaining in the left subarray from the current index to the end.
+          Accumulate the inversion count while merging.
+          Return Inversion Count:
+          
+          After sorting and counting inversions, return the inversion count.
+          Identify Pairs Violating BST Property:
+          
+          Since the number of inversions represents the number of pairs violating the BST property, return the inversion count.
+          Here's a step-wise summary:
+          
+          Perform an inorder traversal of the BST to obtain a sorted array.
+          Use a modified merge sort algorithm to sort the array while counting inversions.
+          During merging, count inversions whenever an element from the right subarray is chosen over an element from the left subarray.
+          Return the inversion count.
+          As the inversion count represents the number of pairs violating the BST property, return this count.
+-------------------------------------------------------------------------------------------------------------------------------------->
