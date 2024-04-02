@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------------------------------------------->
+Question -> Minimum Absolute Difference In BST ??
+---------------------------------------------------------------------------------------------------------------->
+
+class Solution
+{
+    public:
+    
+    void inorder(Node* &root, vector<int> &arr)
+    {
+        if(root)
+        {
+            inorder(root->left, arr);
+            arr.push_back(root->data);
+            inorder(root->right, arr);
+        }
+        return;
+    }
+    int absolute_diff(Node *root)
+    {
+        //Your code here
+        vector<int>ans;
+        inorder(root, ans);
+        
+        // 10 30 60 90
+        
+        int mini = INT_MAX;
+        
+        for(int i = 0; i < ans.size()-1; i++)
+        {
+            mini = min(mini,(ans[i+1] - ans[i]));
+        }
+        return mini;
+    }
+};
+---------------------------------------------------------------------------------------------------------------->
+approach -> 
+         The code is trying to find the minimum absolute difference between any two nodes in a binary search tree.
+         To do this, it first creates an empty vector called "arr" and passes it by reference to the function "inorder".
+         This function takes in a root node of a binary search tree and performs an inorder traversal on it, which means that it visits all the nodes in ascending order.
+         Inside the inorder function, there is a recursive call to itself for the left subtree of the current node.
+         This ensures that all values from smaller nodes are added to the vector before adding values from larger nodes.
+         Then, the data value of the current node is pushed into the vector "arr".
+         Finally, another recursive call is made for the right subtree of the current node.
+         Once this process is completed for all nodes in the tree, we have a sorted list of all values present in our binary search tree stored in "arr".
+         Next, we initialize a variable called "mini" with INT_MAX (the maximum possible integer value).
+         We will use this variable to keep track of our minimum absolute difference as we traverse through our sorted list.
+         We then loop through each element in our sorted list except for last one (since there are no elements after it) and calculate its absolute difference with its adjacent element using arr[i+1] - arr[i].
+         If this calculated value turns out to be less than our current minimum value stored in mini, then we update mini with this new value.
+         Finally, once we have gone
+         The code attempts to find the minimum absolute difference between any two nodes in a binary tree.
