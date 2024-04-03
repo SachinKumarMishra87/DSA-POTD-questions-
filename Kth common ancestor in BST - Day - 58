@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------------------------------------------------------------->
+Question -> Kth common ancestor in BST ??
+---------------------------------------------------------------------------------------------------------------------------------->
+
+class Solution
+{
+     public:
+    Node* LCA(Node* root, int x, int y)
+    {
+        if(!root) return NULL;
+        
+        if(root->data==x || root->data==y) 
+            return root;
+        
+        else if(root->data<x && root->data<y)
+            return LCA(root->right, x,y);
+        
+        else if(root->data>x && root->data>y)
+            return LCA(root->left, x, y);
+        
+        else{
+            return root;
+        }
+    }
+    
+    
+    void f(Node* root, Node* lca, vector<int>&path){
+        path.push_back(root->data);
+        if(root->data == lca->data) return;
+        else if(root->data > lca->data) f(root->left, lca, path);
+        else{
+            f(root->right, lca, path);
+        }
+        
+        return;
+    }
+    
+    
+    /*You are required to complete below function */
+    int kthCommonAncestor(Node *root, int k,int x, int y)
+    {
+        // your code goes here
+        Node* lca=LCA(root, x, y);
+        vector<int>path;
+        f(root, lca, path);
+        int n=path.size();
+        if(path.size()<k) return -1;
+        return path[n-k];
+    }
+};
+
+---------------------------------------------------------------------------------------------------------------------------------->
+approach ->
+
+           The code is trying to find the kth common ancestor of two given nodes in a binary search tree.
+           It first finds the lowest common ancestor (LCA) of the two nodes using a recursive function called LCA().
+           This function takes in three parameters - root, x and y, where root is the current node being checked and x and y are the two nodes whose LCA we want to find.
+           If either of these parameters is NULL, it means that one or both of the nodes do not exist in the tree.
+           In this case, we return NULL as there can be no LCA for non-existent nodes.
+           Next, we check if either of x or y matches with root's data.
+           If so, then root itself is their LCA.
+           Otherwise, we check if both x and y lie on either side of root's data.
+           If they do, then their LCA must lie on that side too.
+           So we recursively call our function again with updated values for root based on which side contains both x and y.
+           Finally, if neither condition holds true i.e., when one node lies on one side while another lies on another side from current node's data value; then it means that current node is our desired LCA.
+           Once we have found our LCA using this approach; next step involves finding out all ancestors between this newly found lca till its parent/root.
+           This process has been done by calling f() method which takes 3 arguments: Root Node , Lowest Common An
+           The code attempts to find the kth common ancestor of two nodes with values x and y in a binary search tree.
+---------------------------------------------------------------------------------------------------------------------------------->
