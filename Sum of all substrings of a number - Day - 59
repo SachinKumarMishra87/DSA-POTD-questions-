@@ -1,0 +1,39 @@
+--------------------------------------------------------------------------------------------------------------------------->
+Question ->Sum of all substrings of a number
+--------------------------------------------------------------------------------------------------------------------------->
+
+class Solution
+{
+    public:
+    int mod = 1e9+7;
+    long long sumSubstrings(string s)
+    {
+        int n= s.size();
+        vector<long long> dp(n,0);
+        
+        dp[0] = s[0]-'0';
+        long long ans = dp[0];
+        
+        for(int i=1;i<n;i++)
+        {
+            dp[i] = ((dp[i-1]*10)%mod + ((s[i]-'0')*(i+1))%mod)%mod;
+            ans = (ans + dp[i])%mod;
+        }
+        return ans;
+    }
+};
+--------------------------------------------------------------------------------------------------------------------------->
+approach ->
+           The given code is a solution to the problem of finding the sum of all possible substrings of a given string.
+           Let's go through it step by step to understand how it works.
+           First, we define a variable "mod" and assign it the value 1e9+7.
+           This is used for taking modulo in order to avoid integer overflow while performing calculations.
+           Next, we declare a function named "sumSubstrings" which takes in a string as its parameter and returns an integer value.
+           Inside this function, we first initialize two variables - "n" which stores the size of the input string and "dp" which is a vector that will store our dynamic programming values.
+           We then start filling up our dp array using bottom-up approach.
+           The idea here is to calculate the sum of all possible substrings ending at each index i in s. For example, if s = "123", then dp[0] would store 1 (substring: 1), dp[1] would store 14 (substrings: 2,12) and so on.
+           To achieve this, we use a loop starting from index 1 till n-1 (since dp[0] has already been calculated).
+           Inside this loop, we first multiply dp[i-1] with 10 since every substring ending at index i can be formed by appending digit at index i to all substrings ending at previous indices multiplied by 10.
+           Then we add ((s[i]-'0')*(i
+           The code calculates the sum of all possible substrings of a given string and returns the result.
+--------------------------------------------------------------------------------------------------------------------------->
