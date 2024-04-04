@@ -34,6 +34,6 @@ approach ->
            The idea here is to calculate the sum of all possible substrings ending at each index i in s. For example, if s = "123", then dp[0] would store 1 (substring: 1), dp[1] would store 14 (substrings: 2,12) and so on.
            To achieve this, we use a loop starting from index 1 till n-1 (since dp[0] has already been calculated).
            Inside this loop, we first multiply dp[i-1] with 10 since every substring ending at index i can be formed by appending digit at index i to all substrings ending at previous indices multiplied by 10.
-           Then we add ((s[i]-'0')*(i
+           Then we add ((s[i]-'0')*(i+1))
            The code calculates the sum of all possible substrings of a given string and returns the result.
 --------------------------------------------------------------------------------------------------------------------------->
