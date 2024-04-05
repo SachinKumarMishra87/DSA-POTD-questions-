@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------------------------------------------------------------->
+Question -> Strictly Increasing Array..??
+
+-Given an array nums of n positive integers. Find the minimum number of operations required to modify the array such that array elements are in strictly increasing order (nums[i] < nums[i+1]).
+-Changing a number to greater or lesser than original number is counted as one operation.
+
+Note: Array elements can become negative after applying operation.
+
+Example 1:
+
+Input:
+n = 6
+nums = [1, 2, 3, 6, 5, 4]
+Output: 
+2
+Explanation: 
+By decreasing 6 by 2 and increasing 4 by 2, nums will be like [1, 2, 3, 4, 5, 6] which is stricly increasing.
+---------------------------------------------------------------------------------------------------------------------------------->
+
+int min_operations(vector<int>& nums)
+{
+       int res=1,n=nums.size();
+       vector<int> dp(n,1);
+
+       for(int i=1;i<nums.size();i++)
+       {
+           for(int j=0;j<i;j++)
+           {
+               if(nums[i]-nums[j]>=i-j)
+               {
+                   dp[i]=max(dp[i],dp[j]+1);
+                   res=max(res,dp[i]);
+               }
+                
+           }
+        }
+       
+       return n-res;
+  }
+---------------------------------------------------------------------------------------------------------------------------------->
+Approach -> 
+         The code is trying to find the minimum number of operations needed to make all elements in a given vector equal.
+         The vector contains integers and the goal is to reduce the difference between any two adjacent elements by performing certain operations.
+         To solve this problem, we first create a variable "res" which will store our final result.
+         We also initialize another variable "n" with the size of the input vector.
+         Next, we create a new vector called "dp" which has the same size as our input vector.
+         This new vector will store the maximum length of subsequence that can be formed using elements from index 0 up to i (where i is an index in nums).
+         We then use a nested for loop where we iterate through each element in nums starting from index 1.
+         For each element at index i, we check all previous elements (from j=0 to j=i-1) and see if their difference with current element satisfies our condition (nums[i]-nums[j]>=i-j).
+         If it does, then we update dp[i] by taking maximum value between its current value and dp[j]+1 (which means adding one more operation on top of what was previously calculated for dp[j]).
+         We also update res by taking maximum value between its current value and dp[i].
+         This way, at every iteration, res stores the longest subsequence length possible so far.
+         Finally, once both loops are completed, we return n-res since that would give us minimum number of operations required to make all
+         The code is trying to find the minimum number of operations required to make all elements in the given vector equal, by incrementing each element by a certain amount based on its index and the difference between its value and the value of previous elements.
+---------------------------------------------------------------------------------------------------------------------------------->
