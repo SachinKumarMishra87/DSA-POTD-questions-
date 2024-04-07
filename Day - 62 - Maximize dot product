@@ -1,0 +1,41 @@
+------------------------------------------------------------------------------------------------------------------------------>
+Question -> Maximize dot product
+------------------------------------------------------------------------------------------------------------------------------>
+
+class Solution{
+		
+	public:
+
+    int maxDotProduct(int n, int m, int a[], int b[]) 
+	{ 
+		// Your code goes here
+		int dp[m+1][n+1];
+		memset(dp, 0, sizeof(dp));
+		
+		for(int i=1;i<=m;i++){
+		    for(int j=i;j<=n;j++){
+		        dp[i][j]=max(dp[i-1][j-1]+a[j-1]*b[i-1], dp[i][j-1]);
+		    }
+		}
+		return dp[m][n];
+	} 
+	
+};
+------------------------------------------------------------------------------------------------------------------------------>
+Approach -> 
+           The code is trying to find the maximum dot product between two arrays of numbers, a and b.
+           The size of array a is n and the size of array b is m. To solve this problem, the code uses dynamic programming.
+           It creates a 2D array called dp with dimensions (m+1) x (n+1).
+           This extra row and column are used for boundary conditions.
+           Next, it initializes all values in dp to 0 using memset function.
+           This ensures that there are no garbage values in the array.
+           Then, it starts filling up the dp array from top left corner to bottom right corner using nested for loops.
+           The outer loop iterates over rows while inner loop iterates over columns.
+           For each cell in dp, we calculate its value by taking maximum of two options - either include current element or exclude it.
+           If we include current element, then we add product of corresponding elements from both arrays (a[j-1] * b[i-1]) to previous diagonal element's value (dp[i-1][j-1]).
+           If we exclude current element, then we simply take value from previous column's cell (dp[i][j-1]).
+           Finally, once all cells have been filled up with correct values according to above logic, our answer will be present at bottom right corner i.e., dp[m][n].
+           So we return that as our final result.
+           This approach works because when calculating max dot product between two arrays a[0...i]
+           The code is used to find the maximum dot product of two arrays a and b of size n and m respectively.
+------------------------------------------------------------------------------------------------------------------------------>
