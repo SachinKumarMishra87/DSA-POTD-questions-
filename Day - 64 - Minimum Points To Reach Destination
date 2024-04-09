@@ -1,0 +1,70 @@
+------------------------------------------------------------------------------------------------------------------------------------------>
+Question -> Minimum Points To Reach Destination
+=>
+Given a m*n grid with each cell consisting of positive, negative, or zero point. We can move across a cell only if we have positive points. Whenever we pass through a cell, points in that cell are added to our overall points, the task is to find minimum initial points to reach cell (m-1, n-1) from (0, 0) by following these certain set of rules :
+1. From a cell (i, j) we can move to (i + 1, j) or (i, j + 1).
+2. We cannot move from (i, j) if your overall points at (i, j) are <= 0.
+3. We have to reach at (n-1, m-1) with minimum positive points i.e., > 0.
+------------------------------------------------------------------------------------------------------------------------------------------>
+Example 1:
+
+Input: 
+m = 3, n = 3 
+points = {{-2,-3,3}, 
+          {-5,-10,1},
+          {10,30,-5}} 
+Output: 
+7 
+Explanation: 7 is the minimum value to reach the destination with positive throughout the path. Below is the path. (0,0) -> (0,1) -> (0,2) -> (1, 2) -> (2, 2) We start from (0, 0) with 7, we reach (0, 1) with 5, (0, 2) with 2, (1, 2) with 5, (2, 2) with and finally we have 1 point (we needed greater than 0 points at the end).
+-------------------------------------------------------------------------------------------------------------->
+Example 2:
+Input:
+m = 3, n = 2
+points = {{2,3},  
+          {5,10},  
+          {10,30}} 
+Output: 
+1 
+Explanation: Take any path, all of them are positive. So, required one point at the start
+----------------------------SolluTion-------------------------------------------------------------------------------------------------------------->
+class Solution{
+
+	public:
+int solve(vector<vector<int>> &points, int i, int j, int m, int n, vector<vector<int>> &dp)
+    {
+        if (i >= m || j >= n || i < 0 || j < 0)
+            return INT_MAX;
+        if (i == m - 1 && j == n - 1)
+            return points[i][j];
+        if (dp[i][j] != INT_MIN)
+            return dp[i][j];
+        int down = points[i][j] + solve(points, i + 1, j, m, n, dp);
+        int right = points[i][j] + solve(points, i, j + 1, m, n, dp);
+        down = min(down, 0);
+        right = min(right, 0);
+        return dp[i][j] = max(down, right);
+    }
+    int minPoints(int m, int n, vector<vector<int>> points)
+    {
+        vector<vector<int>> dp(m, vector<int>(n, INT_MIN));
+        int val = solve(points, 0, 0, m, n, dp);
+        return abs(val) + 1;
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------>
+Approach -> 
+           The given code is trying to solve a problem where we are given a grid of points and we need to find the minimum number of points required to reach from the top left corner of the grid to the bottom right corner, such that at each point, our total score (sum of all previous points) remains positive.
+           To solve this problem, the code uses dynamic programming.
+           It first checks if we have reached the bottom right corner, in which case it returns the value at that point.
+           If not, it recursively calls itself for moving down and moving right from current position.
+           The base case for recursion is when we go out of bounds or reach the bottom right corner.
+           To avoid recalculating values for already visited positions, a 2D array called dp is used as a memoization table.
+           Initially all values in this table are set to INT_MIN (a very large negative number).
+           Whenever a recursive call is made, it first checks if there exists an entry in dp with same indices as current position.
+           If yes, then instead of making another recursive call and calculating again, it simply returns that value.
+           In each recursive call, two variables 'down' and 'right' store the result returned by calling function on moving down and moving right respectively.
+           These values are then compared using min() function and stored back into dp table before returning them.
+           Finally when control reaches main(), abs(val) + 1 is returned as answer since val contains negative sum till now but we want minimum positive sum required
+           The code attempts to find the minimum number of points required to reach the bottom right corner of a grid, starting from the top left corner, where each cell has a certain number of points associated with it.
+           The code uses dynamic programming to store and reuse previously calculated values in order to optimize the solution.
+------------------------------------------------------------------------------------------------------------------------------------------>
