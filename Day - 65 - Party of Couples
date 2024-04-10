@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------------------------------------------------->
+Question -> Party of Couples
+                          You are given an integer array arr[] of size n, representing n number of people in a party,
+                          each person is denoted by an integer. Couples are represented by the same number ie: two people
+                          have the same integer value, it means they are a couple. Find out the only single person in the party of couples.
+                          
+                          NOTE: It is guarantee that there exist only one single person in the party.
+---------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 5
+arr = {1, 2, 3, 2, 1}
+Output: 
+3
+Explaination: Only the number 3 is single.
+---------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 11 
+arr = {1, 2, 3, 5, 3, 2, 1, 4, 5, 6, 6} 
+Output: 
+4 
+Explaination: 4 is the only single.
+---------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    int findSingle(int n, int arr[])
+    {
+        int ans = 0;
+        
+        for(int i = 0; i < n; i++)
+        {
+            ans = ans^arr[i];
+        }
+        return ans;
+    }
+};
+---------------------------------------------------------------------------------------------------------------------->
+Approach -> 
+         The given code is a solution to find the single element in an array of integers.
+         The function "findSingle" takes two parameters, n and arr[], where n represents the size of the array and arr[] represents the array itself.
+         To understand how this code works, we need to first understand what XOR operation does.
+         XOR (exclusive OR) is a bitwise operator that returns 1 if both bits are different and 0 if they are same.
+         For example, 1^1 = 0, 0^1 = 1, and so on.
+         Now coming back to our code, we have initialized a variable "ans" with value 0.
+         Then using a for loop, we iterate through all elements of the array starting from index i=0 till i=n-1 (since indexing starts from zero).
+         Inside the loop body, we perform XOR operation between ans and each element of the array one by one.
+         For example, If our input is [2,3,4], then initially ans=0.
+         In first iteration: ans = ans ^ arr[0] => ans = (000)^2(010) => ans=(010) In second iteration: ans = ans ^ arr[1] => ans=(010)^3(011) =>ans=(001) In third iteration: asns=ans^arr[2]=>ans=(001)^4(100)=>ans=(101) So at last when all iterations are completed ,we will be left with only
+         The code attempts to find the single element in an array of integers by performing bitwise XOR operation on all the elements.
+---------------------------------------------------------------------------------------------------------------------->
