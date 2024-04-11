@@ -1,0 +1,82 @@
+--------------------------------------------------------------------------------------------------------------------------------->
+Question -> Gray to Binary equivalent
+
+Given an integer number n, which is a decimal representation of Gray Code. 
+Find the binary equivalent of the Gray Code & return the decimal representation
+of the binary equivalent.
+
+Gray question converter -> https://www.geeksforgeeks.org/problems/gray-to-binary-equivalent-1587115620/1
+--------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 4
+Output: 
+7
+Explanation:
+Given 4, its gray code =  110.
+Binary equivalent of the gray code 110 is 100.
+Return 7 representing gray code 100.
+--------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 15
+Output: 
+10
+Explanation:
+Given 15 representing gray code 1000.
+Binary equivalent of gray code 1000 is 1111.
+Return 10 representing gray code 1111 
+ie binary 1010.
+--------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    // function to convert a given Gray equivalent n to Binary equivalent.
+     int grayToBinary(int n)
+    {
+         // Your code here
+        int ans=0;
+        vector<int>v;
+        
+          if(n==0){
+              v.push_back(0);
+          }
+          
+          while(n!=0){
+              v.push_back(n%2);
+              n=n/2;
+          }
+          
+          reverse(v.begin(),v.end());
+          
+          int j= v.size()-1;
+          int val=0;
+          
+        for(int i=0;i<v.size();i++){
+            val=val^v[i];
+            ans+=val *pow(2,j);
+            j--;
+        }
+        return ans;
+    }
+};
+--------------------------------------------------------------------------------------------------------------------------------->
+Approach -> 
+         The function "grayToBinary" takes in an integer "n" as its parameter and converts it from gray code to binary code.
+         First, the function initializes a variable "ans" to store the final converted value.
+         Then, it creates a vector "v" to store the individual bits of the binary code.
+         Next, there is a check for when n is equal to 0.
+         If this is true, then we know that the binary representation will also be 0 and hence we push back 0 into our vector.
+         If n is not equal to 0, then we enter a while loop which runs until n becomes 0.
+         Inside this loop, we keep pushing back the remainder (either 1 or 0) obtained by dividing n by 2 into our vector v. This essentially gives us all the bits of our original number in reverse order.
+         After exiting the while loop, we use the reverse() function on our vector v so that now all its elements are in correct order - representing each bit of our original number starting from MSB (most significant bit) to LSB (least significant bit).
+         Now comes the main logic behind converting gray code to binary code.
+         We initialize two variables - j which stores index values for accessing elements of v and val which will help us calculate each bit of our final answer.
+         We start traversing through each element of v using a for loop with i as iterator variable.
+         For every iteration, we perform XOR operation between val and current element
+         The code converts a given number from gray code to binary code and returns the result.
+--------------------------------------------------------------------------------------------------------------------------------->
+
+
+ 
