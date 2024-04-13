@@ -1,0 +1,82 @@
+------------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Reverse Bits ??
+                        Given a number x, reverse its binary form and return the answer in decimal.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+x = 1
+Output:
+2147483648 
+Explanation:
+Binary of 1 in 32 bits representation-
+00000000000000000000000000000001
+Reversing the binary form we get, 
+10000000000000000000000000000000,
+whose decimal value is 2147483648.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+x = 5
+Output:
+2684354560 
+Explanation:
+Binary of 5 in 32 bits representation-
+00000000000000000000000000000101
+Reversing the binary form we get, 
+10100000000000000000000000000000,
+whose decimal value is 2684354560.
+------------------------------------------------------------------------------------------------------------------------------------------->
+
+class Solution {
+  public:
+    long long reversedBits(long long x)
+    {
+        vector<long long> ans;
+        long long result = 0;
+        
+        if(x == 0)
+        {
+            ans.push_back(0);
+        }
+        
+        while(x != 0)
+        {
+            ans.push_back(x%2);
+            x = x / 2;
+        }
+        int size = ans.size();
+        
+        for(int i = 0; i < 32-size; i++)
+        {
+            ans.push_back(0);
+        }
+        
+        int j= ans.size()-1;
+
+        for(int i = 0; i < ans.size(); i++)
+        {
+            result += (ans[i] * pow(2,j));
+            j--;
+        }
+        return result;
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is trying to reverse the bits of a given number.
+         It first creates an empty vector called "ans" and sets the result variable to 0.
+         Then, it checks if the given number is equal to 0, and if so, it adds 0 to the vector.
+         Next, it enters a while loop that will continue until x (the given number) becomes 0.
+         Inside this loop, it takes the remainder of x divided by 2 (which will either be 1 or 0) and adds it to the vector.
+         Then, x is divided by 2 again in order for us to eventually reach our base case of x = 0.
+         After exiting this loop, we check how many elements are in our vector using size().
+         This gives us the number of bits in our original number.
+         We then add enough zeros at the end of our vector so that there are exactly 32 elements (since we want a total of 32 bits).
+         Finally, we use another for loop starting from index i=0 up until index i=size-1 (size being equal to ans.size()).
+         In each iteration of this loop, we take each element from left-to-right in our vector and multiply it with its corresponding power-of-two value based on its position in the array (i.e., ans[3] would be multiplied by pow(2,j), where j=29 since size=30).
+         The resulting values are added together and stored into result.
+         Some relevant programming concepts
+         The code takes in a long long integer, converts it to binary, reverses the bits and returns the decimal equivalent of the reversed binary number.
+------------------------------------------------------------------------------------------------------------------------------------------->
