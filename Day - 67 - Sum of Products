@@ -1,0 +1,67 @@
+------------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Sum of Products ??
+                            Given an array arr[] of size n. Calculate the sum of Bitwise ANDs ie:
+                            calculate sum of arr[i] & arr[j] for all the pairs in the given array
+                            arr[] where i < j.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 3
+arr = {5, 10, 15}
+Output:
+15
+Explanation:
+The bitwise Ands of all pairs where i<j are (5&10) = 0, (5&15) = 5 and (10&15) = 10.
+Therefore, the total sum = (0+5+10) = 15.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 4
+arr = {10, 20, 30, 40}
+Output:
+46
+Explanation:
+The sum of bitwise Ands 
+of all pairs = (0+10+8+20+0+8) = 46.
+------------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+    long long pairAndSum(int n, long long arr[])
+    {
+        // code here
+        long long ans = 0;
+        int sum = 0;
+        for(int i=0;i<32;i++)
+        {
+           int count = 0;
+           for(int j=0;j<n;j++)
+           {
+               if(arr[j]&(1<<i))
+               {
+                   count++;
+               }
+           }
+           sum += (count*(count-1)/2 * 1 << i);
+            }
+            return sum;
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------->
+Approach -> 
+         The given codeis for finding the sum of all possible pairs in an array of integers.
+         The function takes two inputs, n which represents the size of the array and arr which is the actual array.
+         Firstly, a variable 'ans' is initialized to 0, this will store our final answer.
+         Then a loop runs from i=0 to i<32, this means that we are considering each bit position in a 32-bit integer (since we are using long long data type).
+         Inside this loop, another loop runs from j=0 to j<n.
+         This means that we are iterating through each element in the given array.
+         Now comes an important concept called bitwise operators.
+         In simple terms, these operators perform operations on individual bits rather than whole numbers.
+         In this case, we use '&' operator which performs AND operation between two bits at corresponding positions.
+         For example: if arr[j] = 5 (binary representation - 101) and (1<<i) = 4 (binary representation -100), then arr[j]&(1<<i) would give us zero since only one bit matches at position i.
+         Now coming back to our code, inside the inner loop we check if any particular bit at position i is set or not for each element in the array by using '&'.
+         If it's set then count variable gets incremented by one.
+         After completing inner loop for all elements in arr[], count stores how many times that particular bit was set among all elements present in arr
+         The code attempts to calculate the sum of all possible pairs of elements in the given array, where each pair consists of two elements whose bitwise AND operation results in a non-zero value
+------------------------------------------------------------------------------------------------------------------------------------------->
