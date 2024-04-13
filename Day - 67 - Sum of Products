@@ -50,18 +50,20 @@ class Solution {
 };
 ------------------------------------------------------------------------------------------------------------------------------------------->
 Approach -> 
-         The given codeis for finding the sum of all possible pairs in an array of integers.
-         The function takes two inputs, n which represents the size of the array and arr which is the actual array.
-         Firstly, a variable 'ans' is initialized to 0, this will store our final answer.
-         Then a loop runs from i=0 to i<32, this means that we are considering each bit position in a 32-bit integer (since we are using long long data type).
-         Inside this loop, another loop runs from j=0 to j<n.
-         This means that we are iterating through each element in the given array.
-         Now comes an important concept called bitwise operators.
-         In simple terms, these operators perform operations on individual bits rather than whole numbers.
-         In this case, we use '&' operator which performs AND operation between two bits at corresponding positions.
-         For example: if arr[j] = 5 (binary representation - 101) and (1<<i) = 4 (binary representation -100), then arr[j]&(1<<i) would give us zero since only one bit matches at position i.
-         Now coming back to our code, inside the inner loop we check if any particular bit at position i is set or not for each element in the array by using '&'.
-         If it's set then count variable gets incremented by one.
-         After completing inner loop for all elements in arr[], count stores how many times that particular bit was set among all elements present in arr
-         The code attempts to calculate the sum of all possible pairs of elements in the given array, where each pair consists of two elements whose bitwise AND operation results in a non-zero value
+         The given code is used to find the sum of all possible pairs in an array of integers.
+         The function takes two parameters, n which represents the size of the array and arr which is the actual array.
+         Firstly, a variable ans is initialized to 0.
+         This variable will store the final answer.
+         Next, a for loop is used to iterate through each bit position from 0 to 31 (since we are dealing with 32-bit integers).
+         Inside this loop, another variable k is initialized to 0.
+         This variable will count the number of elements in the array that have their ith bit set (i.e., equal to 1).
+         Now, within this inner loop, another for loop iterates through each element in the given array.
+         If an element has its ith bit set (using bitwise AND operation), then k is incremented by one.
+         After counting all such elements with their ith bit set, we use a formula ((k)*(k-1))/2) to calculate how many pairs can be formed using these elements.
+         For example, if there are three elements with their ith bit set (say i=3), then there can be three possible pairs - {a,b}, {b,c}, and {c,a}.
+         Hence we divide k*(k-1) by two since order does not matter in forming pairs.
+         Finally, we multiply this value by (1<<i) and add it to our ans variable.
+         Here << represents left shift operator which shifts bits towards left by
+         The code attempts to calculate the sum of all possible pairs of elements in an array, where each element is represented in binary form 
+         and the sum is calculated by counting the number of ones in each bit position and multiplying it by 2 raised to that bit position.
 ------------------------------------------------------------------------------------------------------------------------------------------->
