@@ -1,0 +1,91 @@
+------------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Count the elements ??
+                        Given two arrays a and b both of size n. Given q queries in an array query each having
+                        a positive integer x denoting an index of the array a. For each query, your task is to 
+                        find all the elements less than or equal to a[x] in the array b.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 3
+a[] = {4,1,2}
+b[] = {1,7,3}
+q = 2
+query[] = {0,1}
+Output : 
+2
+1
+Explanation: 
+For 1st query, the given index is 0, a[0] = 4. There are 2 elements(1 and 3) which are less than or equal to 4.
+For 2nd query, the given index is 1, a[1] = 1. There exists only 1 element(1) which is less than or equal to 1.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 4
+a[] = {1,1,5,5}
+b[] = {0,1,2,3}
+q = 4
+query[] = {0,1,2,3}
+Output : 
+2
+2
+4
+4
+Explanation: 
+For 1st query and 2nd query, the given index is 0 and 1 respectively, a[0] = a[1] = 1. There are 2 elements(0 and 1) which are less than or equal to 1. 
+For 3rd query and 4th query, the given index is 2 and 3 respectively, a[2] = a[3] = 5. All the 4 elements are less than or equal to 5.  
+------------------------------------------------------------------------------------------------------------------------------------------->
+
+class Solution {
+  public:
+   int help(vector<int>&b,int ele,int n)
+   {
+        int l=0;
+        int r=n-1;
+        int ans=-1;
+        
+        while(l<=r)
+        {
+            int mid=(l+r)/2;
+            
+            if(b[mid]>ele)
+            {
+                r=mid-1;
+            }
+            else
+            {
+                ans=max(ans,mid);
+                l=mid+1;
+            }
+        }
+        return ans==-1?0:ans+1;
+    }
+    
+    vector<int> countElements(vector<int> &a, vector<int> &b, int n, vector<int> &query,int q) 
+    {        
+        // Your code goes here;
+        sort(b.begin(),b.end());
+        vector<int> ans;
+        for(auto it:query){
+            int x=a[it];
+            ans.push_back(help(b,x,n));
+        }
+        return ans;
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+             The given code is used to find the number of elements in a vector that are smaller than or equal to a given element.
+             Let's break down the code and understand it step by step.
+             First, we have a function named "help" which takes three parameters - a vector "b", an integer "ele", and another integer "n".
+             This function will return an integer value which represents the count of elements in vector b that are smaller than or equal to ele.
+             Inside this function, we first initialize two variables l and r with 0 and n-1 respectively.
+             These variables represent the leftmost index and rightmost index of our search range.
+             We also initialize ans with -1 as our final answer variable.
+             Next, we enter into a while loop where we check if l is less than or equal to r. If yes, then we calculate mid as (l+r)/2 which gives us the middle index between l and r. Now comes the important part where we compare b[mid] with ele.
+             If b[mid] is greater than ele, then it means that all elements after mid will also be greater than ele since vector b is sorted in ascending order.
+             So, in this case, we update our right pointer r to mid-1 so that our search range reduces from [l,r] to [l,mid-1].
+             On the other hand, if b[mid] is not greater than ele i.e., either it is smaller or equal to ele then there
+             The code attempts to return an array of integers that represent the number of elements in vector b that are smaller than the element at the corresponding index in vector a.
+------------------------------------------------------------------------------------------------------------------------------------------->
