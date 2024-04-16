@@ -1,0 +1,92 @@
+------------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Minimize the Difference ??
+                       You are given an array arr of size n. You have to remove a subarray of size k , such that the difference between
+                       the maximum and minimum values of the remaining array is minimized.
+                       Find the minimum value obtained after performing the operation of the removal of the subarray and return it.
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 5
+k = 3
+arr = {1, 2, 3, 4, 5}
+Output: 
+1
+Explanation: 
+We can remove first subarray of length 3(i.e. {1, 2, 3}) then remaining array will be {4,5} 
+and the difference of maximum and minimum element will be 1 i.e 5 - 4 = 1
+------------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 6
+k = 3
+arr = {2, 3, 1, 4, 6, 7}
+Output: 
+2
+Explanation:
+If we remove the subarray {2,3,1} then remaining array will be {4,6,7} and the difference  = 7-4 = 3
+If we remove the subarray {3,1,4} then remaining array will be {2,6,7} and the difference  = 7-2 = 5
+If we remove the subarray {1,4,6} then remaining array will be {2,3,7} and the difference  = 7-2 = 5
+If we remove the subarray {4,6,7} then remaining array will be {2,3,1} and the difference  = 3-1 = 2
+So the answer will be min(3,5,5,2) = 2
+------------------------------------------------------------------------------------------------------------------------------------------->
+
+class Solution {
+  public:
+  int minimizeDifference(int n, int k, vector<int> &arr) {
+
+       vector<int> rightmax(n, 0), rightmin(n, 0);
+       
+       rightmax[n-1] = arr[n-1];
+       rightmin[n-1] = arr[n-1];
+       
+       for(int i = n-2 ; i >= 0 ; i--)
+       {
+           rightmax[i] = max(rightmax[i+1], arr[i]);
+           rightmin[i] = min(rightmin[i+1], arr[i]);
+       }
+       
+       int ans = INT_MAX;
+       
+       int leftmax = INT_MIN, leftmin = INT_MAX;
+       int j = 0;
+       
+       for(int i = k ; i <= n ; i++)
+       {
+           int minval  , maxval;
+           if(i <= n-1)
+           {
+                minval  = min(leftmin, rightmin[i]);
+                maxval = max(leftmax, rightmax[i]);
+           }
+           else
+           {
+               minval = leftmin;
+               maxval = leftmax;
+           }
+
+           ans = min(ans, maxval-minval);
+           leftmax = max(leftmax, arr[j]);
+           leftmin = min(leftmin, arr[j]);
+           j++;
+       }
+     
+       return ans; 
+    }
+};
+------------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+             The code is trying to find the minimum difference between the maximum and minimum values of a subarray of size k from an array of size n. To do this, it first creates two arrays - 
+             rightmax and rightmin - which store the maximum and minimum values respectively for each index in the original array starting from the end.
+             This is done using a simple loop that iterates backwards through the original array.
+             Next, it initializes variables leftmax and leftmin to store the maximum and minimum values respectively for a subarray starting at index 0 with size k.
+             It also sets j = 0 as we will be iterating through the original array again.
+             Then, there is another loop that starts at k (since we need to have a subarray of size k) and goes up till n (the total length of our original array).
+             Within this loop, it calculates minval as either leftmin or rightmin[i] depending on whether i <= n-1 or not.
+             Similarly, maxval is calculated based on whether i <= n-1 or not.
+             The reason for this distinction is because when i == n-1, there are no more elements in our rightmax/rightmin arrays so we just use whatever value was stored in leftmax/leftmin.
+             Finally, within this loop itself, ans (which stores our final answer) is updated by taking min(ans,maxval-minval).
+             After updating ans, we update our variables leftmax/leftmin by setting them equal to arr[j]
+             The code attempts to find the minimum difference between the maximum and minimum values of a subarray of length k from an array of size n.
+------------------------------------------------------------------------------------------------------------------------------------------->
