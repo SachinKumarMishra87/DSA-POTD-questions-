@@ -1,0 +1,134 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Count Pairs in an Array ??
+                                Given an array arr of n integers, count all pairs (arr[i], arr[j]) in it
+                                such that i*arr[i] > j*arr[j] and 0 ≤ i < j < n.
+Note: 0-based Indexing is followed.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n*log(n))
+Expected Auxiliary Space: O(n*log(n))
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input :
+n = 4
+arr[] = {8, 4, 2, 1}
+Output :
+2
+Explanation:
+If we see the array after operations
+[0*8, 1*4, 2*2, 3*1] => [0, 4, 4, 3]
+Pairs which hold the condition i*arr[i] > j*arr[j] are (4,1) and (2,1), so in total 2 pairs are available.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input :
+n = 7
+arr[] = {5, 0, 10, 2, 4, 1, 6}
+Output:
+5
+Explanation :
+Pairs which hold the condition i*arr[i] > j*arr[j] are (10,2), (10,4), (10,1), (2,1) and (4,1), so in total 5 pairs are there.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    int mergesort(vector<int>&v,int low,int mid,int high)
+    {
+        int n=mid-low+1;
+        int m=high-mid;
+        
+        vector<int>left(n),right(m);
+        int i=0,j=0,k=low;
+        
+        for(int i=0;i<n;i++)
+            left[i]=v[low+i];
+        
+        for(int i=0;i<m;i++)
+            right[i]=v[mid+1+i];
+            
+            
+        i=0,j=0,k=low;
+        
+        int count=0;
+        
+        while(i<n and j<m)
+        {
+            if(left[i]<=right[j])
+            {
+                v[k++]=left[i++];
+            }
+            else
+            {
+                v[k++]=right[j++];
+                count+=(n-i);
+            }
+        }
+        
+        while(i<n)
+        {
+            v[k++]=left[i++];
+        }
+        
+        while(j<m)
+        {
+            v[k++]=right[j++];
+        }
+        
+        return count;
+        
+    }
+    int merge(vector<int>&v,int low,int high)
+    {
+        int res=0;
+        
+        if(low<high)
+        {
+            int m=low+(high-low)/2;
+            res+=merge(v,low,m);
+            res+=merge(v,m+1,high);
+            res+=mergesort(v,low,m,high);
+        }
+        return res;
+    }
+    
+    void print(vector<int>v)
+    {
+        for(int i=0;i<v.size();i++)
+        {
+            cout<<v[i]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    int countPairs(int arr[] , int n ) 
+    {
+        // Your code goes here   
+        
+        vector<int>v(n);
+        
+        for(int i=0;i<n;i++)
+        {
+            v[i]=i*arr[i];
+        }
+        
+        return merge(v,0,n-1);
+        
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is implementing the concept of Merge Sort to count the number of pairs in an array.
+         The main function "countPairs" takes in an integer array and its size as parameters and returns the total number of pairs.
+         First, a vector is created with the same size as that of the input array.
+         This vector will be used to store intermediate values during sorting.
+         Next, a for loop is used to iterate through each element in the input array.
+         For each element, its index value (i) is multiplied by its corresponding value (arr[i]) and stored in the vector at position i.
+         This step ensures that all elements are sorted according to their product values.
+         Then, we call another function "merge" which implements merge sort on this vector.
+         The merge function takes three parameters - low, mid and high indices - which define different subarrays within this vector that need to be sorted.
+         Inside merge function, first we calculate two variables n and m which represent sizes of left and right subarrays respectively.
+         Then two new vectors are created named left and right with these sizes.
+         In order to fill up these newly created vectors from our original one (v), we use for loops starting from 0 till n-1 or m-1 depending upon whether it's left or right subarray respectively.
+         These loops copy elements from v into either left or right based on their positions relative to mid index calculated earlier.
+         After filling up both arrays completely now comes merging part where actual sorting happens using while loop until
+         The code attempts to count the number of pairs in an array such that the product of the indices of the pair is greater than the value at that index.
+-------------------------------------------------------------------------------------------------------------------------------------->
