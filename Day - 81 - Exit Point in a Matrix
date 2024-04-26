@@ -1,0 +1,92 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Exit Point in a Matrix ??
+                                Given a matrix of size n x m with 0’s and 1’s, you enter the matrix at cell (0,0) in left to right direction.
+                                Whenever you encounter a 0 you retain it in the same direction, else if you encounter a 1 you have to change the
+                                direction to the right of the current direction and change that 1 value to 0, you have to find out from which index
+                                you will leave the matrix at the end.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n * m) where n = number of rows and m = number of columns.
+Expected Space Complexity: O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 3, m = 3
+matrix = {{0, 1, 0},
+          {0, 1, 1}, 
+          {0, 0, 0}}
+Output: 
+{1, 0}
+Explanation: 
+Enter the matrix at (0, 0) 
+-> then move towards (0, 1) ->  1 is encountered 
+-> turn right towards (1, 1)  -> again 1 is encountered 
+-> turn right again towards (1, 0) 
+-> now, the boundary of matrix will be crossed ->hence, exit point reached at 1, 0..
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 1, m = 2
+matrix = {{0, 0}}
+Output: 
+{0, 1}
+Explanation: 
+Enter the matrix at cell (0, 0).
+Since the cell contains a 0, we continue moving in the same direction.
+We reach cell (0, 1), which also contains a 0. So, we continue moving in the same direction, we exit the matrix from cell (0, 1).
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+   vector<int> FindExitPoint(int n, int m, vector<vector<int>>& matrix)
+   {
+        int i=0, j=0;
+        int p_i=0, p_j=0;
+        char ch = 'R';
+        while(i>=0 and j>=0 and i<n and j<m){
+            p_i = i;
+            p_j = j;
+            if(matrix[i][j]==0){
+                if(ch=='R') j++;
+                else if(ch=='D') i++;
+                else if(ch=='L') j--;
+                else i--;
+            }
+            else{
+                matrix[i][j] = 0;
+                if(ch=='R'){
+                    ch='D';
+                    i++;
+                }
+                else if(ch=='D'){
+                    ch='L';
+                    j--;
+                }
+                else if(ch=='L'){
+                    ch='U';
+                    i--;
+                }
+                else{
+                    ch='R';
+                    j++;
+                }
+            }
+        }
+        return {p_i, p_j};
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is trying to find the exit point in a given matrix.
+         The input consists of the number of rows and columns, denoted by n and m respectively, and a 2D vector representing the matrix.
+         To start with, we initialize two variables i and j to 0 which represent the current position in the matrix.
+         We also have two more variables p_i and p_j which will store our final answer.
+         Then we have a character variable ch initialized to 'R' which represents our direction of movement.
+         We use a while loop that runs as long as i,j are within bounds (i.e., greater than or equal to 0 but less than n for i, and greater than or equal to 0 but less than m for j).
+         Inside this loop, we first update p_i=p_j=i=j so that it stores our previous position before moving on.
+         Next comes an if-else block where we check if there is an obstacle at our current position (represented by value 0) or not.
+         If there is no obstacle then we simply move forward based on our direction represented by ch - right(R), down(D), left(L) or up(U).
+         If there is an obstacle present at our current position then we change its value from 1 to zero indicating that it has been visited already.
+         After this step, depending upon what was previously stored in ch (our direction), we update its value accordingly along with updating either i or j so that they now point towards next valid
+         The code attempts to find the exit point in a matrix, starting from the top left corner and moving in a clockwise direction until it reaches the edge of the matrix or encounters a 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
