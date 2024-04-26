@@ -1,0 +1,88 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Maximum sum of hour glass ??
+                                Given two integers n, m and a 2D matrix mat of dimensions nxm, the task is to find the maximum sum of an hourglass.
+                                An hourglass is defined as a part of the matrix with the following form:
+Return -1 if any hourglass is not found.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n*m)
+Expected Auxillary Space: O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 3, m = 3
+mat = [[1, 2, 3],
+       [4, 5, 6],
+       [7, 8, 9]]
+Output:
+35
+Explanation:
+There is only one hour glass which is
+1 2 3
+  5
+7 8 9   and its sum is 35.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 2, m = 3
+mat = [[1, 2, 3],
+       [4, 5, 6]]
+Output:
+-1
+Explanation:
+There are no hour glasses in this matrix.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+    int findMaxSum(int n, int m, vector<vector<int>> mat) {
+        // code here
+        int dx[]={1,-1,-1,-1,1,1};
+        int dy[]={0,0,-1,1,-1,1};
+        int ans=INT_MIN;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            { 
+                bool can=true;
+                int temp=0;
+                for(int k=0;k<6;k++)
+                {
+                    if(dx[k]+i>=0 && dx[k]+i<n && dy[k]+j>=0 && dy[k]+j<m)
+                     { 
+                         temp+=mat[dx[k]+i][dy[k]+j];
+                     }
+                     else
+                     {
+                         can=false;
+                         break;
+                     }  
+                }
+                if(can==true)
+                {
+                    ans=max(ans,temp+mat[i][j]);
+                
+                }
+            }
+        }
+        return ans==INT_MIN?-1:ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+           The given code is a solution to the problem of finding the maximum sum in a matrix with some constraints.
+           Let's go through it step by step.
+           First, we have two variables n and m which represent the number of rows and columns in our matrix respectively.
+           These are passed as parameters to the function findMaxSum().
+           Next, we have a 2D vector called mat which represents our input matrix.
+           This is also passed as a parameter to the function.
+           Now, let's look at how this code solves the problem.
+           The main logic lies within the nested for loop starting from line 12.
+           This loop iterates over each element in our input matrix.
+           Inside this loop, we have another for loop (line 16-20) that checks all possible adjacent elements around our current element using two arrays dx[] and dy[].
+           These arrays contain values that help us move one step in any direction (up/down/left/right/diagonal).
+           For each adjacent element that exists within bounds of our matrix, we add its value to a temporary variable temp (line 19).
+           If any of these adjacent elements do not exist (due to being on an edge or corner), then we set can=false indicating that this particular cell cannot be considered for calculating max sum.
+           Once all six adjacent cells are checked, if can=true i.e., all cells were valid and added successfully without going out of bounds, then we update ans with max(ans,temp+mat[i][j]) where mat[i][j]
+           The code attempts to find the maximum sum of a submatrix of size 3x3 in a given matrix.
+-------------------------------------------------------------------------------------------------------------------------------------->
