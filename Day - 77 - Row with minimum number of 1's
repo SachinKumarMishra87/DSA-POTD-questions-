@@ -1,0 +1,75 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Row with minimum number of 1's ??
+                                Given a 2D binary matrix(1-based indexed) a of dimensions nxm , determine the row that contains the minimum number of 1's.
+Note: The matrix contains only 1's and 0's. Also, if two or more rows contain the minimum number of 1's, the answer is the lowest of those indices.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity:O(n*m)
+Expected Auxillary Space:O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 4,m = 4
+a = [[1, 1, 1, 1],
+     [1, 1, 0, 0], 
+     [0, 0, 1, 1],
+     [1, 1, 1, 1]]
+Output:
+2
+Explanation:
+Rows 2 and 3 contain the minimum number 
+of 1's(2 each).Since,row 2 is less than row 3.
+Thus, the answer is 2.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 3,m = 3
+a = [[0, 0, 0],
+     [0, 0, 0],
+     [0, 0, 0]]
+Output:
+1
+Explanation:
+All the rows contain the same number 
+of 1's(0 each).Among them, index 1 
+is the smallest, so the answer is 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+int minRow(int n, int m, vector<vector<int>> a) {
+        // code here
+        int mini=INT_MAX;
+        int ans=0;
+        for(int i=0;i<n;i++){
+            int cntOne=0;
+            for(int j=0;j<m;j++){
+                if(a[i][j]==1){
+                    cntOne++;
+                }
+            }
+            if(mini>cntOne){
+                mini=cntOne;
+                ans=i+1;
+            }
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+             The given code is a solution to the problem of finding the row with minimum number of 1s in a given matrix.
+             The function takes three parameters - n, m and a, where n and m represent the dimensions of the matrix and 'a' represents the actual matrix.
+             To solve this problem, we first initialize a variable 'mini' with maximum possible integer value using INT_MAX.
+             This will be used to keep track of the minimum number of 1s found so far.
+             We also initialize another variable 'ans' which will store the index (row number) of the row with minimum 1s.
+             Next, we use two for loops to iterate through each element in every row.
+             The outer loop iterates over all rows while inner loop iterates over all columns within that particular row.
+             Inside this loop, we check if an element is equal to 1 or not.
+             If it is equal to 1, then we increment our counter variable 'cntOne'.
+             After checking all elements in one particular row, we compare its value with our current minimum value stored in 'mini'.
+             If it is smaller than mini, then we update both mini and ans variables accordingly.
+             Finally after iterating through all rows and comparing their respective counts of ones with mini value stored so far ,we return ans as our final answer which gives us index (row number) having least no.of ones .
+             This solution makes use of basic programming concepts like loops (for), conditional statements (if-else), variables initialization/
+             The code attempts to find the row with minimum number of 1s in a given matrix and return its index.
+-------------------------------------------------------------------------------------------------------------------------------------->
