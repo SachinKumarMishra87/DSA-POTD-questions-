@@ -1,0 +1,68 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Union of Two Sorted Arrays ??
+                                Given two sorted arrays of size n and m respectively, find their union. The Union of two arrays
+                                can be defined as the common and distinct elements in the two arrays. Return the elements in sorted order.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n+m).
+Expected Auxiliary Space: O(n+m).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 5, arr1[] = {1, 2, 3, 4, 5}  
+m = 5, arr2 [] = {1, 2, 3, 6, 7}
+Output: 
+1 2 3 4 5 6 7
+Explanation: 
+Distinct elements including both the arrays are: 1 2 3 4 5 6 7.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 5, arr1[] = {2, 2, 3, 4, 5}  
+m = 5, arr2[] = {1, 1, 2, 3, 4}
+Output: 
+1 2 3 4 5
+Explanation: 
+Distinct elements including both the arrays are: 1 2 3 4 5.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    //arr1,arr2 : the arrays
+    // n, m: size of arrays
+
+      vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+    {
+        //Your code here
+        //return vector with correct order of elements
+        set<int> helper(arr1,arr1+n);
+        for(int i=0;i<m;i++)
+            helper.insert(arr2[i]);
+            
+        vector<int> ans;
+        
+        for(auto x: helper)
+            ans.push_back(x);
+        
+        return ans;
+    }
+
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is trying to find the union of two arrays, which means it wants to combine all the elements from both arrays without any duplicates.
+         First, a set data structure is created using the first array (arr1) as input.
+         A set is a data structure that stores unique values in sorted order.
+         So, this step will automatically remove any duplicate elements from arr1 and store them in sorted order.
+         Next, we loop through the second array (arr2) and insert each element into our set.
+         Since sets only allow unique values, this will ensure that no duplicates are added.
+         Finally, we create an empty vector called "ans" where we will store our final answer.
+         Then, we loop through our set and push each element into the vector "ans".
+         This way, all the elements from both arrays are combined without any duplicates and stored in sorted order.
+         Some relevant programming concepts used here include: - Arrays: An array is a collection of similar data types stored at contiguous memory locations.
+         - Set: A set is a container that stores unique values in sorted order.
+         - Looping: The use of for loops to iterate over each element in an array or other data structures.
+         - Insertion: Adding new elements into a container or data structure.
+         - Vector: A vector is another type of container similar to an array but with dynamic size capabilities.
+         The code is a function that takes in two arrays and their sizes and returns a vector containing the union of the two arrays, with no duplicates and in ascending order.
+-------------------------------------------------------------------------------------------------------------------------------------->
