@@ -1,0 +1,71 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Find missing in second array ??
+                                Given two integer arrays a of size n and b of size m, the task is to find the numbers which are present
+                                in the first array a, but not present in the second array b.
+Note: Numbers to be returned should in order as they appear in array a.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n+m).
+Expected Auxiliary Space: O(m).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 6, m = 5
+a[] = {1, 2, 3, 4, 5, 10}
+b[] = {2, 3, 1, 0, 5}
+Output: 
+4 10
+Explanation: 
+4 and 10 are present in first array, but not in second array.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 5, m = 5
+a[] = {4, 3, 5, 9, 11}
+b[] = {4, 9, 3, 11, 10}
+Output: 
+5  
+Explanation: 
+Second array does not contain element 5.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+// Your code goes here
+vector<int> findMissing(int a[], int b[], int n, int m) 
+    { 
+        // Your code goes here
+        unordered_map<int,int>map;
+        for(int i=0;i<m;i++){
+            map[b[i]]=1;
+        }
+     
+        vector<int>ans;
+     
+        for(int i=0;i<n;i++){
+            if(map.find(a[i])==map.end()){
+                ans.push_back(a[i]);
+            }
+        }
+        return ans;
+	} 
+};	
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The given code is a solution to find missing elements in two arrays.
+         The function "findMissing" takes four parameters - the first array, second array, size of first array and size of second array.
+         Firstly, an unordered map is created using the STL library.
+         This map will store all the elements from the second array as keys with a value of 1.
+         This is done by iterating through the second array and inserting each element into the map.
+         Next, a vector called "ans" is declared which will store all the missing elements from the first array.
+         Then, another loop iterates through the first array and checks if each element exists in the map or not using "map.find(a[i])".
+         If it does not exist (indicated by returning an iterator pointing to end), then that element is pushed into our answer vector.
+         Finally, after iterating through both arrays, we return our answer vector containing all missing elements from the first array.
+         Some relevant programming concepts used here are: 1) Unordered Map: It is an associative container that stores key-value pairs where keys are hashed for faster access.
+         In this case, we use it to efficiently check if an element exists in our second array or not.
+         2) Vector: It is a dynamic data structure that can change its size during runtime.
+         Here we use it to store our final answer.
+         3) Iterators: They are objects used for traversing containers like vectors or maps.
+         We use them here to check if an element exists
+         The code is a function that takes two arrays of integers and their sizes as input, and returns a vector of integers that are present in the first array but not in the second array.
+-------------------------------------------------------------------------------------------------------------------------------------->
