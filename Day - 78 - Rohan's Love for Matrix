@@ -1,0 +1,65 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Rohan's Love for Matrix ??
+                                Rohan has a special love for the matrices especially for the first element of the matrix. Being good at Mathematics,
+                                he also loves to solve the different problem on the matrices. So one day he started to multiply the matrix with the 
+                                original matrix.  The elements of the original matrix a are given by [a00=1 , a01=1, a10=1, a11=0].
+
+Given the power of the matrix, n calculate the an and return the a10 element mod 1000000007.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity:O(n*m)
+Expected Auxillary Space:O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 3
+Output: 
+2 
+Explanation: Take the cube of the original matrix 
+i.e a3 and the (a10)th element is 2
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 4
+Output: 
+3
+Explanation: Take the cube of the original matrix 
+i.e a4 and the (a10)th element is 3.
+-------------------------------------------------------------------------------------------------------------------------------------->
+// User function Template for C++
+class Solution {
+  public:
+    int firstElement(int n) {
+        // code here
+        int first = 1;
+        int second = 1;
+        int mod = 1000000007;
+        int output;
+        for(int i=2; i< n; i++){
+            output = (first+second)%mod;
+            first = second;
+            second = output;
+        }
+        return second;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+             The given code is a solution to find the first element of the Fibonacci series with modulo 1000000007.
+             Firstly, we declare two variables 'first' and 'second' which will store the first two elements of the Fibonacci series.
+             Since we know that the first two elements are always 1, we initialize both these variables to be equal to 1.
+             Next, we declare a variable 'mod' which stores the value of modulo i.e.
+             1000000007 in this case.
+             Then, using a for loop starting from index i=2 (since our first two elements are already initialized), we calculate each subsequent element by adding its previous two elements and taking their modulo with mod variable.
+             This ensures that our output stays within manageable range even if n is very large.
+             Finally, after iterating through all values till n-1 (since indexing starts from 0), we return our final calculated value stored in second variable as it represents our nth element in Fibonacci series.
+             Some important programming concepts used here include: 1) Variables: These are used to store data or values.
+             2) For loop: It is used for iteration over a fixed range or sequence.
+             3) Modulo operator (%): It returns remainder when one number is divided by another.
+             4) Initialization: Assigning an initial value to a variable at declaration time.
+             5) Iteration: Repeating some steps multiple times until certain condition(s) are met.
+             6) Return statement: Used to return final result
+             The code is a function that calculates the nth element of a sequence where each element is the sum of the previous two elements, starting with 1 and 1.
+             The function returns the nth element of this sequence.
+-------------------------------------------------------------------------------------------------------------------------------------->
