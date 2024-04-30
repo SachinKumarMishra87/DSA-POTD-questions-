@@ -36,112 +36,121 @@ resultant list will be -1 0 0 9 15
 in non-decreasing order and 
 15 9 0 0 -1 in non-increasing order.
 -------------------------------------------------------------------------------------------------------------------------------------->
-class Solution
-{
-    public:
-    //Function to add two numbers represented by linked list.
-    Node* reverse(Node* head){
-        Node* cur=head;
-        Node* next=NULL;
-        Node* prev=NULL;
+class Solution {
+  public:
+
+    Node* merge(Node* left, Node* right){
+        Node* ans = NULL;
         
-        while(cur){
-            next=cur->next;
-            cur->next=prev;
-            prev=cur;
-            cur=next;
+        if(left->data<right->data){
+            ans = left;
+            left = left->next;
+        }
+        else{
+            ans = right;
+            right = right->next;
         }
         
-        return prev;
+        Node* tail = ans;
+        
+        while(left!=NULL && right!=NULL){
+            if(left->data<right->data){
+                Node* x = left;
+                tail->next = x;
+                x->prev = tail;
+                tail = tail->next;
+                left = left->next;
+            }
+            else{
+                Node* x = right;
+                tail->next = x;
+                x->prev = tail;
+                tail = tail->next;
+                right = right->next;
+            }
+        }
+        
+        while(left!=NULL){
+            Node* x = left;
+            tail->next = x;
+            x->prev = tail;
+            tail = tail->next;
+            left = left->next;
+        }
+        
+        while(right!=NULL){
+            Node* x = right;
+            tail->next = x;
+            x->prev = tail;
+            tail = tail->next;
+            right = right->next;
+        }
+        
+        tail->next = NULL;
+        return ans;
+    }
+    
+    Node* mergesort(Node* head, int n){
+        if(n<=1) return head;
+        
+        int mid = (n-1)/2;
+        
+        int i=0;
+        Node* temp1 = head;
+        while(i<mid){
+            temp1 = temp1->next;
+            i++;
+        }
+        Node* temp2 = temp1->next;
+        temp1->next = NULL;
+        temp2->prev = NULL;
+        
+        Node* left = mergesort(head, mid+1);
+        
+        Node* right = mergesort(temp2, n-mid-1);
+        
+        return merge(left, right);
         
     }
     
-    void insertAtTail(Node* &ansh,Node* &anst,int val){
-        Node* temp = new Node(val);
-        if(ansh==NULL){
-        ansh=temp;
-        anst=temp;
-            return ;
+    struct Node *sortDoubly(struct Node *head) {
+        // Your code here
+        int n = 0;
+        Node* temp = head;
+        while(temp!=NULL){
+            n++;
+            temp = temp->next;
         }
         
-        else{
-            anst->next=temp;
-            anst=temp;
-        }
-        
-    }
-  Node* add(Node* h1, Node* h2)
-  {        
-        int carry=0;
-        Node* ansh=NULL;
-        Node* anst=NULL;
-        while(h1!=NULL || h2!=NULL || carry!=0){
-            int val1=0;
-            if(h1!=NULL)
-            val1=h1->data;
-            
-            int val2=0;
-            if(h2!=NULL)
-            val2=h2->data;
-            
-            int sum=carry+val1+val2;
-            int digit=sum%10;
-            
-            insertAtTail(ansh,anst,digit);
-            
-            carry=sum/10;
-            
-            if(h1!=NULL)
-            h1=h1->next;
-            
-            if(h2!=NULL)
-            h2=h2->next;
-        }
-        return ansh;
-    }
-    struct Node* addTwoLists(struct Node* num1, struct Node* num2)
-    {
-        while(num1 && num1->data==0){
-            num1=num1->next;
-        }
-        
-        while(num2 && num2->data==0){
-            num2=num2->next;
-        } 
-        if(num1==NULL && num2==NULL){
-            Node* ans= new Node(0);
-            return ans;
-        }
-        num1=reverse(num1);
-        num2=reverse(num2);
-        
-        Node* ans=add(num1,num2);
-        
-        ans = reverse(ans);
-        
-        Node* head=ans;
-        Node* tail=ans;
-        if(head->data==0){
-            head=head->next;
-            delete(tail);
-            ans=head;
-        }
-        return ans;
+        return mergesort(head, n);
     }
 };
 -------------------------------------------------------------------------------------------------------------------------------------->
 Approach ->
-         The code is trying to add two linked lists that represent numbers.
-         The first thing it does is remove any leading zeros from both lists, as they are not necessary for the addition.
-         Next, it reverses both lists so that we can start adding from the least significant digit.
-         This is because in a number like 123, the 3 represents ones place and comes before 2 which represents tens place and so on.
-         Then, it defines a function "add" which takes in two nodes (head pointers of the reversed lists) and adds them together while keeping track of carry digits.
-         It creates a new list called "ansh" which will store our answer's head pointer and anst which will keep track of where to insert new nodes at the end of our answer list.
-         Inside this function, there is a loop that runs until either one or both input lists have been completely traversed or if there is still some carry left after all digits have been added.
-         Inside this loop, we get the value at current position for each list (or zero if one has reached its end), add them along with any previous
-         carry digit and find out what should be stored in our current node by taking modulo 10 (to get single digit).
-         We then update our carry variable by dividing sum by 10 (to get tens digit).
-         After this loop finishes executing, we return our final answer's head pointer.
-         Back inside main function now - We call reverse on both input lists again to restore their original order
-         The code attempts to add two linked lists representing numbers and return the sum as a new linked list.
+         The given code is for sorting a doubly linked list using merge sort algorithm.
+         Let's break down the code and understand it step by step.
+         First, we have a function called "mergesort" which takes in two parameters - head of the linked list and the size of the list (n).
+         This function will recursively divide the given linked list into smaller sublists until there is only one element left in each sublist.
+         Next, we check if n<=1, which means that there is only one element in the current sublist.
+         In this case, we simply return the head as it is already sorted.
+         If n>1, then we find out the middle index (mid) of our current sublist.
+         We use a variable "i" to iterate through our sublist till mid-1 position and reach to temp1 node which will be at mid position after i iterations.
+         Then we set temp2 as next node of temp1 and make its previous pointer NULL as it will be used later on while merging two sorted sublists.
+         Now, we call mergesort again with two parameters - first half of our current sublist starting from head till mid+1th position (including mid) and second half starting from temp2 till end of our current sublist (excluding mid).
+         This process continues until all elements are divided into single-element sublists.
+         Once all elements are divided into single-element sublists, now comes merging part where actual sorting happens.
+         We call another function called "merge".
+         The function takes in two parameters, which are the head nodes of the two lists that need to be merged.
+         Firstly, we create a new node called "ans" and initialize it to NULL.
+         This will eventually become the head of our merged list.
+         Next, we compare the data values of the first nodes in both lists.
+         Whichever value is smaller, its corresponding node becomes the first element of our merged list (i.e., ans).
+         We then move on to comparing the second elements in both lists and continue this process until one of the lists becomes empty.
+         Inside our while loop, we have an if-else statement that checks which data value is smaller between left->data and right->data.
+         If left->data is smaller, then we add that node to our merged list by setting tail->next = x (where x is equal to left), and update tail as well as left pointers accordingly.
+         Otherwise, if right->data is smaller or equal than left->data, then we do similar steps but with right instead.
+         After exiting from this while loop because one of either left or right became NULL (empty), there might still be some remaining elements in either one of these two lists.
+         Therefore, after exiting from this while loop for merging purposes only (not for checking whether any pointer has reached NULL yet), we have another set of two more while loops - each responsible for adding all
+         The code merges two linked lists in ascending order and returns the head of the merged list.
+         The code implements a merge sort algorithm for sorting a doubly linked list.
 -------------------------------------------------------------------------------------------------------------------------------------->
