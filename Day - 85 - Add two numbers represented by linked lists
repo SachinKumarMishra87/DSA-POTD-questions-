@@ -1,0 +1,148 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Add two numbers represented by linked lists ??
+                              Given two decimal numbers, num1 and num2, represented by linked lists of size n and m respectively. 
+                              The task is to return a linked list that represents the sum of these two numbers.
+                              For example, the number 190 will be represented by the linked list, 1->9->0->null, similarly 25 by 2->5->null.
+                              Sum of these two numbers is 190 + 25 = 215, which will be represented by 2->1->5->null. You are required to
+                              return the head of the linked list 2->1->5->null.
+                              Note: There can be leading zeros in the input lists, but there should not be any leading zeros in the output list. 
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n+m)
+Expected Auxiliary Space: O(max(n,m)) for the resultant list.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 2
+num1 = 45 (4->5->null)
+m = 3
+num2 = 345 (3->4->5->null)
+Output: 
+3->9->0->null  
+Explanation: 
+For the given two linked list (4 5) and (3 4 5), after adding the two linked list resultant linked list will be (3 9 0).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 4
+num1 = 0063 (0->0->6->3->null)
+m = 2
+num2 = 07 (0->7->null)
+Output: 
+7->0->null
+Explanation: 
+For the given two linked list (0 0 6 3) and (0 7), after adding the two linked list resultant linked list will be (7 0).
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    Node* reverse(Node* head){
+        Node* cur=head;
+        Node* next=NULL;
+        Node* prev=NULL;
+        
+        while(cur){
+            next=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=next;
+        }
+        
+        return prev;
+        
+    }
+    
+    void insertAtTail(Node* &ansh,Node* &anst,int val){
+        Node* temp = new Node(val);
+        if(ansh==NULL){
+        ansh=temp;
+        anst=temp;
+            return ;
+        }
+        
+        else{
+            anst->next=temp;
+            anst=temp;
+        }
+        
+    }
+    Node* add(Node* h1, Node* h2){
+        
+        int carry=0;
+        Node* ansh=NULL;
+        Node* anst=NULL;
+        while(h1!=NULL || h2!=NULL || carry!=0){
+            int val1=0;
+            if(h1!=NULL)
+            val1=h1->data;
+            
+            int val2=0;
+            if(h2!=NULL)
+            val2=h2->data;
+            
+            int sum=carry+val1+val2;
+            int digit=sum%10;
+            
+            insertAtTail(ansh,anst,digit);
+            
+            carry=sum/10;
+            
+            if(h1!=NULL)
+            h1=h1->next;
+            
+            if(h2!=NULL)
+            h2=h2->next;
+            
+            
+        }
+        
+        return ansh;
+    }
+    struct Node* addTwoLists(struct Node* num1, struct Node* num2)
+    {
+        while(num1 && num1->data==0){
+            num1=num1->next;
+        }
+        
+        while(num2 && num2->data==0){
+            num2=num2->next;
+        }
+        
+        if(num1==NULL && num2==NULL){
+            Node* ans= new Node(0);
+            return ans;
+        }
+        num1=reverse(num1);
+        num2=reverse(num2);
+        
+        Node* ans=add(num1,num2);
+        
+        ans = reverse(ans);
+        
+        Node* head=ans;
+        Node* tail=ans;
+        if(head->data==0){
+            head=head->next;
+            delete(tail);
+            ans=head;
+        }
+        
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+          Input Preparation:
+                      Leading zeros are removed from both input linked lists. This is done by advancing the head pointers of the input lists until they no longer point to zero nodes.
+          Reversal:
+                    Both input lists are reversed. This step is crucial because typically addition is performed from the least significant digit to the most significant digit, but the input lists are likely to be given in the opposite order.
+          Addition:
+                    The reversed lists are added digit by digit, while considering any carry from the previous addition. The result is stored in a new linked list.
+          Finalization:
+                    The resulting linked list is reversed again to restore the original order of digits.
+                    Leading zeros, if any, are removed from the result.
+          Output:
+                The head of the resulting linked list, representing the sum of the two input numbers, is returned.
+-------------------------------------------------------------------------------------------------------------------------------------->
