@@ -1,0 +1,77 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Delete Middle of Linked List ??
+                                Given a singly linked list, delete middle of the linked list. For example, if given linked list is 
+                                1->2->3->4->5 then linked list should be modified to 1->2->4->5.
+                                If there are even nodes, then there would be two middle nodes, we need to delete the second middle element.
+                                For example, if given linked list is 1->2->3->4->5->6 then it should be modified to 1->2->3->5->6.
+                                If the input linked list has single node, then it should return NULL.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n).
+Expected Auxiliary Space: O(1).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+LinkedList: 1->2->3->4->5
+Output: 
+1 2 4 5
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+LinkedList: 2->4->6->7->5->1
+Output: 
+2 4 6 5 1
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    Node* deleteMid(Node* head)
+    {
+        // Your Code Here
+        if(head==NULL)
+        {
+            return head;
+        }
+        Node*temp=head;
+        int count=0;
+        while(temp!=nullptr)
+        {
+            count++;
+            temp=temp->next;
+        }
+        // cout<<count;
+        if(count==1)
+        {
+            return NULL;
+        }
+        int n=count/2;
+        n=n-1;
+        Node*curr=head;
+        while(n!=0)
+        {
+            curr=curr->next;
+            n--;
+        }
+        Node*temp1=curr->next;
+        curr->next=curr->next->next;
+        
+        return head;
+        
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The given code is for deleting the middle node of a linked list.
+         The function takes in the head pointer of the linked list and returns the updated head pointer after deletion.
+         First, we check if the head is null or not.
+         If it is null, then there are no nodes in the linked list and we simply return null as there is nothing to delete.
+         Next, we traverse through the entire linked list using a temporary variable 'temp' and keep track of how many nodes are present by incrementing a counter variable 'count'.
+         If there is only one node in the linked list (i.e., count = 1), then we cannot delete any middle node as there isn't any.
+         So, we simply return null.
+         Otherwise, if there are more than one nodes in the linked list, we calculate which node should be deleted based on its position from either end.
+         Since our goal here is to delete only one middle node (if possible), we divide count by 2 to get an approximate position of where that middle node would be located.
+         We subtract 1 from this value because our current pointer points to head initially and not to first element.
+         Then using another temporary variable 'curr',we traverse till that particular location where mid element needs to be deleted.
+         Once found,the next element's address will be stored into temp1.Then curr->next will point towards curr->next->next i.e.,the next-to-next element.This way,the link between two elements gets broken,and hence,the required
+         The code is used to delete the middle node of a linked list and return the updated linked list.
+-------------------------------------------------------------------------------------------------------------------------------------->
