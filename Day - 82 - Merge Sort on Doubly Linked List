@@ -1,0 +1,147 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Merge Sort on Doubly Linked List ??
+                                Given Pointer/Reference to the head of a doubly linked list of n nodes, the task is to Sort the given doubly 
+                                linked list using Merge Sort in both non-decreasing and non-increasing order.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(nlogn)
+Expected Space Complexity: O(logn)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 8
+value[] = {7,3,5,2,6,4,1,8}
+Output:
+1 2 3 4 5 6 7 8
+8 7 6 5 4 3 2 1
+Explanation: After sorting the given
+linked list in both ways, resultant
+matrix will be as given in the first
+two line of output, where first line
+is the output for non-decreasing
+order and next line is for non-
+increasing order.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 5
+value[] = {9,15,0,-1,0}
+Output:
+-1 0 0 9 15
+15 9 0 0 -1
+Explanation: After sorting the given
+linked list in both ways, the
+resultant list will be -1 0 0 9 15
+in non-decreasing order and 
+15 9 0 0 -1 in non-increasing order.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    Node* reverse(Node* head){
+        Node* cur=head;
+        Node* next=NULL;
+        Node* prev=NULL;
+        
+        while(cur){
+            next=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=next;
+        }
+        
+        return prev;
+        
+    }
+    
+    void insertAtTail(Node* &ansh,Node* &anst,int val){
+        Node* temp = new Node(val);
+        if(ansh==NULL){
+        ansh=temp;
+        anst=temp;
+            return ;
+        }
+        
+        else{
+            anst->next=temp;
+            anst=temp;
+        }
+        
+    }
+  Node* add(Node* h1, Node* h2)
+  {        
+        int carry=0;
+        Node* ansh=NULL;
+        Node* anst=NULL;
+        while(h1!=NULL || h2!=NULL || carry!=0){
+            int val1=0;
+            if(h1!=NULL)
+            val1=h1->data;
+            
+            int val2=0;
+            if(h2!=NULL)
+            val2=h2->data;
+            
+            int sum=carry+val1+val2;
+            int digit=sum%10;
+            
+            insertAtTail(ansh,anst,digit);
+            
+            carry=sum/10;
+            
+            if(h1!=NULL)
+            h1=h1->next;
+            
+            if(h2!=NULL)
+            h2=h2->next;
+        }
+        return ansh;
+    }
+    struct Node* addTwoLists(struct Node* num1, struct Node* num2)
+    {
+        while(num1 && num1->data==0){
+            num1=num1->next;
+        }
+        
+        while(num2 && num2->data==0){
+            num2=num2->next;
+        } 
+        if(num1==NULL && num2==NULL){
+            Node* ans= new Node(0);
+            return ans;
+        }
+        num1=reverse(num1);
+        num2=reverse(num2);
+        
+        Node* ans=add(num1,num2);
+        
+        ans = reverse(ans);
+        
+        Node* head=ans;
+        Node* tail=ans;
+        if(head->data==0){
+            head=head->next;
+            delete(tail);
+            ans=head;
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is trying to add two linked lists that represent numbers.
+         The first thing it does is remove any leading zeros from both lists, as they are not necessary for the addition.
+         Next, it reverses both lists so that we can start adding from the least significant digit.
+         This is because in a number like 123, the 3 represents ones place and comes before 2 which represents tens place and so on.
+         Then, it defines a function "add" which takes in two nodes (head pointers of the reversed lists) and adds them together while keeping track of carry digits.
+         It creates a new list called "ansh" which will store our answer's head pointer and anst which will keep track of where to insert new nodes at the end of our answer list.
+         Inside this function, there is a loop that runs until either one or both input lists have been completely traversed or if there is still some carry left after all digits have been added.
+         Inside this loop, we get the value at current position for each list (or zero if one has reached its end), add them along with any previous
+         carry digit and find out what should be stored in our current node by taking modulo 10 (to get single digit).
+         We then update our carry variable by dividing sum by 10 (to get tens digit).
+         After this loop finishes executing, we return our final answer's head pointer.
+         Back inside main function now - We call reverse on both input lists again to restore their original order
+         The code attempts to add two linked lists representing numbers and return the sum as a new linked list.
+-------------------------------------------------------------------------------------------------------------------------------------->
