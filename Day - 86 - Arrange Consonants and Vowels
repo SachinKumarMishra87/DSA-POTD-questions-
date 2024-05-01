@@ -1,0 +1,89 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Arrange Consonants and Vowels ??
+                              Given a singly linked list having n nodes containing english alphabets ('a'-'z'). Rearrange the linked
+                              list in such a way that all the vowels come before the consonants while maintaining the order of their arrival. 
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity :  O(n)
+Expected Auxiliary Space :  O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 9
+linked list: a -> b -> c -> d -> e -> f -> g -> h -> i 
+Output: 
+a -> e -> i -> b -> c -> d -> f -> g -> h
+Explanation: 
+After rearranging the input linked list according to the condition the resultant linked list will be as shown in output.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 8
+linked list: a -> b -> a -> b -> d -> e -> e -> d 
+Output: 
+a -> a -> e -> e -> b -> b -> d -> d
+Explanation: 
+After rearranging the input linked list according to the condition the resultant linked list will be as shown in output.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+    // task is to complete this function
+    // function should return head to the list after making
+    // necessary arrangements
+    struct Node* arrangeCV(Node* head) {
+        // Code here
+        if(head == NULL || head -> next == NULL) return head;
+        Node *t = new Node('*');
+        t->next = head;
+        Node *s = NULL;
+        Node *strt = NULL;
+        while(t->next != NULL){
+            if(t->next->data == 'a' || t->next->data == 'e' || t->next->data == 'i' || t->next->data == 'o' || t->next->data == 'u'){
+                if(s == NULL){
+                    s = t->next;
+                    strt =t->next;
+                }else{
+                    s->next = t->next;
+                    s = t->next;
+                }
+                if(t->next == head){
+                    head=head->next;
+                    t=t->next;
+                }else{
+                    t->next = t->next->next;
+                }
+            }
+            else t=t->next;
+        }
+        if(s != NULL){
+            s->next = head;
+            return strt;
+        }else{
+            return head;
+        }
+    }
+};
+
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+            a function named arrangeCV within a class named Solution. The function takes a linked list as input and rearranges its elements 
+            based on whether they are vowels ('a', 'e', 'i', 'o', 'u') or consonants.
+
+            Here's a breakdown of how the code works:
+
+            It first checks if the input linked list is empty or has only one node. If so, it returns the input list as it is.
+            It initializes a new node t with a data value of '*' and sets its next pointer to the head of the input list.
+            It initializes three pointers: s, strt, and head. s points to the last vowel node encountered so far, strt points to the start of the
+            rearranged list (the first vowel node encountered), and head points to the current head of the list.
+            It iterates through the linked list using a while loop until it reaches the end of the list (t->next != NULL).
+            Inside the loop, it checks if the data of the next node (t->next) is a vowel ('a', 'e', 'i', 'o', 'u'). If it is,
+            it moves that node to the vowel section of the list.
+            If s is NULL (meaning this is the first vowel encountered), it sets s and strt to the current vowel node. Otherwise,
+            it updates the next pointer of s to point to the current vowel node (t->next) and moves s to the current vowel node.
+            If the current vowel node is the head of the list, it updates the head pointer to the next node and moves t to the 
+            next node as well. Otherwise, it skips the current node by updating the next pointer of the previous node (t->next = t->next->next).
+            After processing all nodes, if there were vowels in the list (i.e., s is not NULL), it links the last vowel node (s)
+            to the head of the remaining consonant section and returns the start of the rearranged list (strt). Otherwise, it
+            returns the original head of the list.
+-------------------------------------------------------------------------------------------------------------------------------------->
