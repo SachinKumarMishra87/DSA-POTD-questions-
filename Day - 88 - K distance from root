@@ -1,0 +1,82 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> K distance from root ??
+                              Given a binary tree having n nodes and an integer k. Print all nodes that are at distance k from the root
+                              (root is considered at distance 0 from itself). Nodes should be printed from left to right.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n).
+Expected Auxiliary Space: O(Height of the Tree).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+k = 0
+      1
+    /   \
+   3     2
+Output: 
+1
+Explanation: 
+1 is the only node which is 0 distance from the root 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Input:
+k = 3
+        1
+       /
+      2
+       \
+        1
+      /  \
+     5    3
+Output: 
+5 3
+Explanation:  
+5 and 3 are the nodes which are at distance 3 from the root 3.
+Here, returning 3 5 will be incorrect.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution
+{
+    public:
+    // function should print the nodes at k distance from root
+     void solve(vector<int>&ans,struct Node *root,int k)
+     {
+        if(k==0){
+            ans.push_back(root->data);
+        }
+        if(root->left){
+            solve(ans,root->left,k-1);
+        }
+        if(root->right){
+            solve(ans,root->right,k-1);
+        }
+    }
+    vector<int> Kdistance(struct Node *root, int k)
+    {
+      // Your code here
+      vector<int>ans;
+      solve(ans,root,k);
+      return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+          
+          Kdistance Function:
+          This function is the entry point for the user. It takes two parameters:
+          root: A pointer to the root of the binary tree.
+          k: An integer representing the distance from the root to find nodes.
+          Inside this function:
+          It initializes a vector ans to store the values of nodes at distance k.
+          It calls the solve function with ans, root, and k.
+
+          solve Function: 
+          This function takes three parameters:
+          ans: A reference to a vector of integers where the values of nodes at distance k from the root will be stored.
+          root: A pointer to the current node being processed.
+          k: An integer representing the distance from the root.
+          If k is 0, it means the current node is at distance k from the root. In this case, the value of the current node (root->data) is pushed into the ans vector.
+          Then, it checks if the left child of the current node exists. If it does, recursively call the solve function for the left child with k decremented by 1.
+          Similarly, it checks if the right child of the current node exists. If it does, recursively call the solve function for the right child with k decremented by 1.
+         
+          Finally, it returns the ans vector containing the values of nodes at distance k.
+          This code implements a depth-first search (DFS) approach to traverse the binary tree recursively. At each step, it decrements the distance k and explores the left and right subtrees if they exist until it reaches the desired distance from the root.
+-------------------------------------------------------------------------------------------------------------------------------------->
