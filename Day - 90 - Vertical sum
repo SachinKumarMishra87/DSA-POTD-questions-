@@ -1,0 +1,93 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Vertical sum ??
+                             Given a binary tree having n nodes, find the vertical sum of the nodes that are in the same vertical line. 
+                             Return all sums through different vertical lines starting from the left-most vertical line to the right-most
+                             vertical line.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(nlogn).
+Expected Auxiliary Space: O(n).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+       1
+    /  \
+  2     3
+ / \   / \
+4   5 6   7
+Output: 
+4 2 12 3 7
+Explanation:
+The tree has 5 vertical lines
+Line 1 has only one node 4 => vertical sum is 4.
+Line 2 has only one node 2 => vertical sum is 2.
+Line-3 has three nodes: 1,5,6 => vertical sum is 1+5+6 = 12.
+Line-4 has only one node 3 => vertical sum is 3.
+Line-5 has only one node 7 => vertical sum is 7.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+          1
+         /
+        2
+       /
+      3
+     /
+    4
+   /
+  6
+ /
+7
+Output: 
+7 6 4 3 2 1
+Explanation:
+There are six vertical lines each having one node.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+  public:
+    void solve(Node* root, map<int,vector<int>>& mp, int i){
+        // base case
+        if(root == NULL) return;
+        
+        mp[i].push_back(root->data);
+        solve(root->left,mp,i-1);
+        solve(root->right,mp,i+1);
+    }
+  
+    vector <int> verticalSum(Node *root) {
+        // add code here.
+        map<int,vector<int>> mp;
+        vector<int> ans;
+        solve(root,mp,0);
+        
+        for(auto i : mp){
+            int sum = 0;
+            // int left = i.first;
+            vector<int> right = i.second;
+            for(auto j : right){
+                sum += j;
+            }
+            ans.push_back(sum);
+        }
+        
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+      verticalSum() function:
+            This function is the main function for calculating the vertical sum.
+            It initializes a map mp to store vertical levels and a vector ans to store the final result.
+            It calls the solve() function to populate the mp map.
+      ----------------->
+      solve() function:
+            This function recursively traverses the binary tree in an inorder manner.
+            It takes three arguments: the root of the tree, a map to store vertical levels, and an integer 'i' to represent the current vertical level.
+            At each node, it adds the node's data to the corresponding vertical level in the map.
+            It then recursively calls itself for the left and right subtrees, adjusting the vertical level accordingly.
+      ------------------>
+            After populating the map, it iterates through each entry in the map.
+            For each entry, it calculates the sum of all values in the vector (representing nodes at the same vertical level) and adds this sum to the ans vector.
+            Finally, it returns the ans vector containing the vertical sums.
+-------------------------------------------------------------------------------------------------------------------------------------->
