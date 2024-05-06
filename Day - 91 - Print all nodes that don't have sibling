@@ -1,0 +1,94 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Print all nodes that don't have sibling ??
+                              Given a Binary Tree of n nodes, find all the nodes that don't have any siblings. You need to return a list
+                              of integers containing all the nodes that don't have a sibling in sorted order (Increasing).
+                              
+                              Two nodes are said to be siblings if they are present at the same level, and their parents are the same.
+                              
+                              Note: The root node can not have a sibling so it cannot be included in our answer.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(nlogn)
+Expected Auxiliary Space: O(Height of the tree)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input :
+       37
+      /   
+    20
+    /     
+  113 
+
+Output: 
+20 113
+Explanation: 
+Nodes 20 and 113 dont have any siblings.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input :
+       1
+      / \
+     2   3 
+
+Output: 
+-1
+Explanation: 
+Every node has a sibling.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+  public:
+    Node* solve(Node* root,vector<int>&ans)
+    {
+        if(root==NULL)
+        {
+            return NULL;
+        }
+        
+        Node* left=solve(root->left,ans);
+        Node* right=solve(root->right,ans);
+        
+        if(left!=NULL && right==NULL)
+        {
+            ans.push_back(left->data);
+        }
+        if(right!=NULL && left==NULL)
+        {
+            ans.push_back(right->data);
+        }
+        return root;
+    }
+    
+    vector<int> noSibling(Node* node)
+    {
+        // code here
+        vector<int>ans;
+        Node* root=solve(node,ans);
+        sort(ans.begin(),ans.end());
+        
+        if(ans.size()==0)
+        {
+            return {-1};
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+      noSibling() function:
+              This function is the main function for finding nodes with no siblings.
+              It initializes an empty vector ans to store the data of nodes with no siblings.
+              It calls the solve() function to traverse the tree and populate the ans vector with data of nodes with no siblings.]
+--------------------------->
+      solve() function:
+              This function is a recursive helper function that traverses the binary tree.
+              It takes two arguments: the current node being processed (root) and a reference to a vector ans where we store the values of nodes with no siblings.
+              If the current node is NULL, it returns NULL.
+              It recursively calls itself for the left and right subtrees.
+              It then checks if the left child exists but the right child doesn't (or vice versa). If this condition holds true, it means the current node has no sibling, so it adds the data of the sibling-less child to the ans vector.
+              Finally, it returns the current node.
+--------------------------->
+              After traversing the tree and populating the ans vector, it sorts the vector in ascending order.
+              If there are no nodes with no siblings (i.e., ans vector is empty), it returns a vector containing only -1.
+              Otherwise, it returns the ans vector containing the data of nodes with no siblings.
+-------------------------------------------------------------------------------------------------------------------------------------->
