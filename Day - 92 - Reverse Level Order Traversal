@@ -1,0 +1,110 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Reverse Level Order Traversal ??
+                                     Given a binary tree of size n, find its reverse level order traversal. ie- the traversal must
+                                     begin from the last level.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(n)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input :
+        1
+      /   \
+     3     2
+
+Output: 
+3 2 1
+Explanation:
+Traversing level 1 : 3 2
+Traversing level 0 : 1
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input :
+       10
+      /  \
+     20   30
+    / \ 
+   40  60
+
+Output: 
+40 60 20 30 10
+Explanation:
+Traversing level 2 : 40 60
+Traversing level 1 : 20 30
+Traversing level 0 : 10
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+  public:
+  vector<int> reverseLevelOrder(Node *root)
+  {
+      queue<Node*> q;
+      stack<vector<int>> st;
+      vector<int> ans;
+      if(root)
+          q.push(root);
+      while(q.size())
+      {
+          int s = q.size();
+          vector<int> v;
+          for(int i = 0; i < s; i++)
+          {
+              Node *temp = q.front();
+              q.pop();
+              v.push_back(temp->data);
+              if(temp->left)
+                  q.push(temp->left);
+              if(temp->right)
+                  q.push(temp->right);
+          }
+          st.push(v);
+          v.clear();
+      }
+      while(st.size())
+      {
+          vector<int> temp(st.top());
+          st.pop();
+          for(auto x : temp)
+          {
+              ans.push_back(x);
+          }
+          temp.clear();
+      }
+      return ans;
+      // code here
+  }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+      This code is for traversing a binary tree in reverse level order, meaning it processes the nodes level by level from bottom to top, and within each level, from right to left. Let's go through the code step by step:
+
+          Function Signature: The function reverseLevelOrder takes a pointer to the root of the binary tree and returns a vector of integers representing the reverse level order traversal.
+          Data Structures Used:
+
+          queue<Node*> q: This queue is used for level-order traversal.
+          stack<vector<int>> st: This stack is used to store the nodes' values level by level in reverse order.
+          vector<int> ans: This vector stores the final result, i.e., the reverse level order traversal.
+
+          Initialization:
+          if (root) q.push(root): If the root is not null, it's pushed into the queue to start the traversal.
+
+          Level Order Traversal:
+          The code then enters a loop that continues until the queue is empty.
+          Inside the loop, it retrieves the size of the queue s, indicating the number of nodes at the current level.
+          It creates a temporary vector v to store the values of nodes at this level.
+
+          It iterates s times, each time:
+          Pops a node from the front of the queue.
+          Pushes its value into the temporary vector v.
+          If the popped node has left or right children, they are pushed into the queue.
+          After processing all nodes at this level, the temporary vector v is pushed into the stack st, storing the values of this level in reverse order.
+
+          Reversing the Order:
+          Once the traversal completes, the code enters another loop that continues until the stack st is empty.
+          Inside this loop, it pops vectors of node values from the stack one by one.
+          It then appends the values from these vectors into the ans vector, effectively reversing the level order.
+
+          Return:
+          Finally, it returns the vector ans containing the reverse level order traversal of the binary tree.
+-------------------------------------------------------------------------------------------------------------------------------------->
