@@ -1,0 +1,54 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Divisor Game ??
+                          Alice and Bob take turns playing a game, with Alice starting first.
+                          Initially, there is a number n on the chalkboard. On each player's turn, that player makes a move consisting of:
+                          
+                          Choosing any x with 0 < x < n  and n % x == 0.
+                          Replacing the number n on the chalkboard with n - x.
+                          Also, if a player cannot make a move, they lose the game.
+                          Return true if and only if Alice wins the game, assuming both players play optimally.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(1)
+Expected Auxiliary Space: O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 2
+Output: True
+Explanation: Alice chooses 1, and Bob has no more moves.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 3
+Output: False
+Explanation: Alice chooses 1, Bob chooses 1, and Alice has no more moves.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+
+        
+        // code here
+         bool divisorGame(int n) {
+        // code here
+        if(n%2==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+      Check if n is even:
+                If n is divisible by 2 (i.e., n % 2 == 0), Alice can choose x = 1 as a divisor. After Bob's turn, Alice will always have n - 1, which is odd.
+                An odd number can be expressed as a product of only odd numbers, and since 1 is the only odd divisor of n - 1, Bob will always get an odd number.
+                Alice will continue to choose 1 as a divisor, and eventually, Bob will be left with n = 1, which is impossible to divide further. Alice wins.
+                So, if n is even, Alice will win, and the function returns true.
+               
+                If n is odd:
+                If n is odd, Alice has no choice but to choose an odd divisor, because all divisors of an odd number are odd.
+                After Bob's turn, Alice will get an even number.
+                The process continues until Alice gets n = 1, which is impossible to divide further. Bob wins.
+                So, if n is odd, Bob will win, and the function returns false.
