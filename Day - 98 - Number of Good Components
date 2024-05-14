@@ -1,0 +1,104 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Number of Good Components ??
+                      Given an undirected graph with v vertices(numbered from 1 to v) and e edges. Find the number of good components in the graph.
+                      A component of the graph is good if and only if the component is fully connected.
+                      Note: A fully connected component is a subgraph of a given graph such that there's an edge between every pair of 
+                      vertices in the component, the given graph can be a disconnected graph. 
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(v+e)
+Expected Auxiliary Space: O(depth of the graph)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+    (1)
+   /   \
+(3)-----(2)
+
+e=3 
+v=3
+edges={{1, 2},{1, 3},{3, 2}}
+Output: 
+1
+Explanation: 
+We can see that there is only one component in the graph and in this component there is a edge between any two vertces.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+      (7)
+    /
+  (2)             (6)
+   |       (3)    
+  (1)      |  \
+           |  (5)
+           |  /
+           (4)
+
+e=5 
+v=7
+edges={{1, 2},{7, 2},{3, 5},{3, 4},{4, 5}}
+Output: 
+2
+Explanation: 
+We can see that there are 3 components in the graph. For 1-2-7 there is no edge between 1 to 7, so it is not a fully 
+connected component. Rest 2 are individually fully connected component.
+-------------------------------------------------------------------------------------------------------------------------------------->
+ class Solution {
+  public:
+    bool bfs(vector<int>adj[], int start, vector<int>&vis){
+        int num =0, edges=0;
+        queue<int> q;
+        q.push(start);
+        vis[start]=1;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            num++;
+            edges += adj[node].size();
+            for(auto i:adj[node]){
+                if(!vis[i]){
+                    q.push(i);
+                    vis[i]=1;
+                }
+            }
+        }
+         return (num*(num-1) == edges);
+    }
+    int findNumberOfGoodComponent(int e, int v, vector<vector<int>> &edges) {
+        vector<int> adj[v+1];
+        for(int i=0; i<e; i++){
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
+        }
+        vector<int> vis(v+1, 0);
+        int ans=0;
+        for(int i=1; i<=v; i++){
+            if(bfs(adj, i, vis)){
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is using the BFS (Breadth First Search) algorithm to find the number of good components in a given graph.
+         First, it creates an adjacency list representation of the graph using a vector of vectors.
+         This allows for efficient access and modification of edges between nodes.
+         Then, it initializes a queue data structure and pushes the starting node into it.
+         It also creates a visited array with all values set to 0.
+         Next, while the queue is not empty, it removes a node from the front of the queue and increments two variables -
+        "num" which keeps track of total number of nodes visited so far, and "edges" which counts how many edges are present
+         in this component.
+         For each adjacent node that has not been visited yet, it adds them to the queue and marks them as visited by setting
+         their corresponding value in vis array to 1.
+         Finally, after traversing through all connected nodes in this component, if num*(num-1) equals edges then we have
+         found a good component.
+         This condition checks whether every node in this component is connected to every other node or not.
+         If yes, then we increment ans variable which keeps track of total number of good components found so far.
+         In conclusion, this code uses BFS algorithm along with some mathematical logic (checking if every node is connected
+         to every other node) to find out how many good components exist in a given graph.
+         The code attempts to count the number of good components in a graph, where a good component is defined as a connected 
+         subgraph in which the number of nodes multiplied by the number of nodes minus one is equal to the number of edges.
+-------------------------------------------------------------------------------------------------------------------------------------->
