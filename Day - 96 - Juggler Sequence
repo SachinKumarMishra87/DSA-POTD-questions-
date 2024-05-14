@@ -1,0 +1,85 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Juggler Sequence ??
+                      Juggler Sequence is a series of integers in which the first term starts with a positive integer number a and the
+                      remaining terms are generated from the immediate previous term using the below recurrence relation:
+
+Given a number n, find the Juggler Sequence for this number as the first term of the sequence until it becomes 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(n)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: n = 9
+Output: 9 27 140 11 36 6 2 1
+Explaination: We start with 9 and use 
+above formula to get next terms.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: n = 6
+Output: 6 2 1
+Explaination: 
+[61/2] = 2. 
+[21/2] = 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+    void solve(long long n,vector<long long> &a){
+        if(n==1){
+           // a.push_back(n);
+            return;
+        }
+        
+        if(n%2==0){
+            n=sqrt(n);
+        }
+        else //if(n%2!=0)
+        {
+            n=(sqrt(n))*n;
+        }
+        a.push_back(n);
+        
+        solve(n,a);
+        return;
+    }
+  
+    vector<long long> jugglerSequence(long long n) {
+        // code here
+        vector<long long> ans;
+        ans.push_back(n);
+        
+        //solve(n,ans);// --->using Recursions...
+        
+
+       //iterative Approach....
+        while(n!=1){
+            if(n%2==0){
+                n=sqrt(n);
+            }
+            else
+            {
+                n=n*sqrt(n);
+            }
+            
+            ans.push_back(n);
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The code is implementing the Juggler Sequence, which is a mathematical sequence where each term in the sequence is calculated using a specific formula.
+         The goal of this code is to generate and return all the terms in the Juggler Sequence for a given input number.
+         The first thing we notice in the code is that it takes an input parameter "n" which represents the starting number for our sequence.
+         This value will be used to calculate all subsequent terms in the sequence.
+         Next, we have a vector called "a" which will store all our generated terms.
+         A vector is a data structure that can hold multiple values of the same type, similar to an array but with more flexibility.
+         We then check if n equals 1 because according to the definition of Juggler Sequence, if n=1 then there are no further calculations needed and we simply return without adding any additional terms to our vector.
+         If n does not equal 1, we move on to calculating new terms for our sequence.
+         We start by checking if n is even or odd using modulo division (%).
+         If it's even, then we take its square root and assign it back to n. If it's odd, then we multiply its square root by itself (which essentially squares it) and assign it back to n. After updating n based on whether it was even or odd, we add this new value of n into our vector "a".
+         This process continues until eventually reaching 1 as per previous checks.
+         Finally, once
+         The code is used to find the juggler sequence of a given number.
+-------------------------------------------------------------------------------------------------------------------------------------->
