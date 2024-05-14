@@ -1,0 +1,57 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Minimum steps to destination ??
+                      Given an infinite number line. You start at 0 and can go either to the left or to the right. The condition is
+                      that in the ith move, you must take i steps. Given a destination d, find the minimum number of steps required
+                      to reach that destination.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(sqrt(d))
+Expected Auxiliary Space: O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: d = 2
+Output: 3
+Explaination: The steps taken are +1, -2 and +3.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: d = 10
+Output: 4
+Explaination: The steps taken are +1, +2, +3 and +4.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+    int minSteps(int d) {
+        int add=1;
+        int elem=0,cnt=0;
+        while(elem<d){
+            elem+=add;
+            add++;
+            cnt++;
+        }
+        while((elem-d)%2!=0){
+            cnt++;
+            elem+=add;
+            add++;
+        }
+        return cnt;
+        // code here
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+           The code is trying to find the minimum number of steps required to reach a given distance 'd'.
+           First, it initializes two variables - 'add' and 'elem' with values 1 and 0 respectively.
+           These variables will be used to keep track of the current step being taken and the total distance covered so far.
+           Next, there is a while loop that runs as long as the total distance covered (elem) is less than the given distance (d).
+           Inside this loop, add is incremented by 1 in each iteration and elem is updated by adding add to it.
+           This means that in each iteration, we are taking one more step (add++) and covering an additional unit of distance (elem+=add).
+           Once this loop ends, we have reached or exceeded the given distance d. However, since we want to find the minimum number of steps required, we need to check if there are any remaining units of distance left after reaching d. This can happen if d was not exactly divisible by any integer before reaching it.
+           To handle this case, there is another while loop that checks if (elem-d)%2 == 0.
+           If not, it means that there are still some remaining units of distance left which cannot be covered in one step.
+           So we increment cnt variable by 1 (since we need one more step) and update elem again by adding add++ units to it.
+           This process continues until all remaining units of distances are covered completely without leaving any remainder.
+           Finally when
+           The code attempts to calculate the minimum number of steps required to reach a certain number 'd' by adding consecutive numbers starting from 1, where each step involves adding the next consecutive number and incrementing the count.
+           If the final sum is not equal to 'd', then additional steps are taken by incrementing the count and adding the next consecutive number until the final sum is equal to 'd'.
+-------------------------------------------------------------------------------------------------------------------------------------->
