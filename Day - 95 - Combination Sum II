@@ -1,0 +1,89 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Combination Sum II ??
+                      Given an array of integers arr, the length of the array n, and an integer k, find all the unique combinations
+                      in arr where the sum of the combination is equal to k. Each number can only be used once in a combination.
+                      Return the combinations in the lexicographically sorted order, where each combination is in non-decreasing order.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(2min(n,p))
+Expected Auxiliary Space: O(n)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 5, k = 7
+arr[] = { 1, 2, 3, 3, 5 }
+Output:
+{ { 1, 3, 3 }, { 2, 5 } }
+Explanation:
+1 + 3 + 3 = 7
+2 + 5 = 7
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 6, k = 30
+arr[] = { 5, 10, 15, 20, 25, 30 }
+Output:
+{ { 5, 10, 15 }, { 5, 25 }, { 10, 20 }, { 30 } }
+Explanation:
+5 + 10 + 15 = 30
+5 + 25 = 30
+10 + 20 = 30
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+public:
+    vector<vector<int>> ans;
+    void solve(vector<int>& arr, int index, vector<int>& path ,long long sum, int k) 
+    {
+        if(sum >= k)
+        {
+            if(sum == k)
+                ans.push_back(path);
+            
+            return;
+        }
+        if(index >= arr.size())
+        {
+            return;
+        }
+        
+        path.push_back(arr[index]);
+        solve(arr, index + 1, path, sum + arr[index], k);
+        path.pop_back();
+        
+        while(index + 1 < arr.size() && arr[index] == arr[index + 1])
+            index++;
+            
+        solve(arr, index + 1, path, sum, k);
+    }
+    vector<vector<int>> CombinationSum2(vector<int> arr,int n,int k)
+    {
+        sort(arr.begin(), arr.end());
+        vector<int> path;
+        long long sum = 0;
+        solve(arr, 0, path, sum, k);
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+       The code is using a backtracking approach to find all possible combinations of numbers from the given array that add up to a 
+       target sum, which is represented by the variable "k".
+       The function takes in three parameters - the array of numbers, its size (n), and the target sum (k).
+       Firstly, the array is sorted in ascending order using the built-in sort() function.
+       This will help in avoiding duplicate combinations later on.
+       Next, a recursive helper function called "solve" is called with four parameters - the index of current element being considered
+       (initially set to 0), an empty vector representing our current combination or path, a variable for keeping track of current sum 
+       (initialized as 0), and finally, the target sum.
+       Inside this helper function, there are two base cases.
+       The first one checks if our current sum has exceeded or reached k. If it has reached k exactly, then we have found one valid 
+       combination and we add it to our final answer vector "ans".
+       Otherwise, if it has exceeded k already, then we simply return without doing anything else.
+       The second base case checks if we have exhausted all elements in our original input array.
+       If yes, then again we just return without doing anything else.
+       If neither of these base cases are satisfied yet, then we proceed with recursion by adding the current element at index "index" 
+       to our path vector and updating our current sum accordingly.
+       Then recursively calling solve() again but this time with updated values for index
+       The code attempts to find all unique combinations of numbers in a given array that sum up to a given target value, with each 
+       number being used only once
+-------------------------------------------------------------------------------------------------------------------------------------->
