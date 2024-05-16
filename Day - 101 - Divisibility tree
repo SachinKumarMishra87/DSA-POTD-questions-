@@ -1,0 +1,80 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Divisibility tree ??
+                  Given a tree with n nodes where n is even. The tree is numbered from 1 to n, has n - 1 edges and is rooted at node 1.
+                  Your task is to eliminate the maximum number of edges resulting in a set of disjoint trees where the number of nodes
+                  in each tree is divisible by 2.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n)
+Expected Space Complexity: O(n)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 10
+edges = {{2,1},{3,1},{4,3},{5,2},{6,1},{7,2},{8,6},{9,8},{10,8}}
+Output:
+2
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input: 
+n = 4
+edges = {{2,1},{4,2},{1,3}}
+Output:
+1
+Explanation:
+After removing 2-1, each remaining component consists of even number of nodes. 
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+public:
+	unordered_map<int, vector<int>> adj;
+    
+    int total = 0;
+    int solve(int curr, int prev = -1) {
+        int ans = 0;
+        for(auto i : adj[curr]) {
+            if(i != prev) {
+                int res = solve(i, curr); 
+                if(res%2 == 0) {
+                    total++;
+                }
+                else {
+                    ans += res;
+                }
+            }
+        }
+        
+        return ans + 1;
+    }
+	int minimumEdgeRemove(int n, vector<vector<int>>edges){
+	    for(auto i : edges) {
+	        int s = i[0];
+	        int e = i[1];
+	        adj[s].push_back(e);
+	        adj[e].push_back(s);
+	    }
+	    solve(1);
+	    return total;
+	}
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+         The given code is trying to find the minimum number of edges that need to be removed from a given graph in order to make all 
+         its connected components have even number of vertices.
+         First, an unordered map is created which will store the adjacency list for each vertex in the graph.
+         This means that for each vertex, we can access a vector containing all its adjacent vertices.
+         Next, a variable "total" is declared and initialized with 0.
+         This variable will keep track of the total number of edges that need to be removed.
+         Then, a function called "solve" is defined which takes two parameters - "curr" and "prev".
+         The parameter "curr" represents the current vertex being visited while traversing through the graph and "prev" represents its parent 
+         node (or previous node) in the traversal path.
+         Inside this function, first we initialize another variable called "ans" with 0.
+         This variable will store the final answer for each subgraph or connected component.
+         Next, we use a for loop to iterate through all adjacent nodes of our current node ("curr").
+         Inside this loop, we check if any adjacent node is not equal to our previous node ("prev") because if it's
+         equal then it means we are going back towards our parent node and hence there's no need to visit it again.
+         If an adjacent node is found which is not equal to our previous node then we recursively call our solve 
+         function on that particular adjacent node passing curr as prev (since now curr becomes parent
+         The code attempts to find the minimum number of edges that need to be removed from a graph so that the 
+         resulting graph has no cycles of odd length.
+-------------------------------------------------------------------------------------------------------------------------------------->
