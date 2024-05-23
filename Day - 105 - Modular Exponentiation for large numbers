@@ -1,0 +1,80 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Modular Exponentiation for large numbers ??
+                  Implement pow(x, n) % M.
+In other words, for a given value of x, n, and M, find  (xn) % M.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(log(n)).
+Expected Auxiliary Space: O(1).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+x = 3, n = 2, m = 4
+Output:
+1
+Explanation:
+32 = 9. 9 % 4 = 1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+x = 2, n = 6, m = 10
+Output:
+4
+Explanation:
+26 = 64. 64 % 10 = 4.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution
+{
+	public:
+			long long int PowMod(long long int x,long long int n,long long int M)
+		{
+		    long long int ans = 1;
+        
+        x = x % M;
+
+        while (n) {
+            if (n & 1) {
+                ans = (ans * x) % M;
+            }
+            x = (x * x) % M;
+            n = n >> 1;
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+       Approach: Modular Exponentiation by Squaring
+The function PowMod calculates 
+modM efficiently using the method known as Modular Exponentiation by Squaring. This approach is preferred for its time efficiency, especially when dealing with large exponents. The basic idea is to reduce the number of multiplications by exploiting the binary representation of the exponent n.
+
+Steps in the Approach:
+Initialize the Result:
+
+Start with ans = 1. This variable will hold the final result of the computation.
+Reduce the Base Modulo M:
+
+Compute x = x % M to ensure that x is within the range [0, M-1]. This helps in keeping the intermediate results manageable and prevents overflow.
+Loop Until the Exponent n Becomes Zero:
+
+Iterate while n is greater than 0.
+Check Each Bit of the Exponent:
+
+If the current least significant bit (LSB) of n is 1 (n & 1):
+Multiply ans by the current value of x and take the result modulo M. This step includes the current power of x in the result.
+Square the Base and Take Modulo M:
+
+Update x to x^2 % M. This prepares the base for the next bit of the exponent.
+Right-Shift the Exponent:
+
+Right-shift n by 1 bit (n = n >> 1). This effectively divides n by 2, moving to the next higher power of x.
+Return the Result:
+
+After the loop completes, ans contains the result of ((x^n) \mod M`. Return this value.
+Why This Approach Works:
+Efficiency: This method is efficient because it reduces the problem size by half in each iteration. Instead of performing n multiplications, it only requires O(log n) multiplications, making it much faster for large values of n.
+Modular Arithmetic: By taking modulo M at each step, the numbers remain small, which prevents overflow and keeps the computations manageable.
+Binary Representation: Utilizing the binary representation of n ensures that we only multiply by x when necessary, i.e., when the corresponding bit in the exponent is set.
+
+-------------------------------------------------------------------------------------------------------------------------------------->
