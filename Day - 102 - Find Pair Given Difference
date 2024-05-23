@@ -1,0 +1,75 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Find Pair Given Difference ??
+                  Given an array arr[] of size n and an integer x, return 1 if there exists a pair of elements in the array whose 
+                  absolute difference is x, otherwise, return -1.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(n* Log(n)).
+Expected Auxiliary Space: O(1).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+n = 6
+x = 78
+arr[] = {5, 20, 3, 2, 5, 80}
+Output:
+1
+Explanation:
+Pair (2, 80) have absolute difference of 78.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 5
+x = 45
+arr[] = {90, 70, 20, 80, 50}
+Output:
+-1
+Explanation:
+There is no pair with absolute difference of 45.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+  public:
+        int findPair(int n, int x, vector<int> &arr) {
+        // code here
+        sort(arr.begin(),arr.end());
+        int first=0;
+        int moving=1;
+        while(moving<n){
+            if(first==moving) moving++;
+            else if(  abs(arr[first]-arr[moving])<x  ) moving++;
+            else if(  abs(arr[first]-arr[moving])>x  ) first++;
+            else return 1;
+        }
+        return -1;
+    }     
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+          The findPair function is designed to determine if there exists a pair of elements in the array arr such that the absolute
+          difference between the two elements is exactly x. The function achieves this by using a two-pointer technique
+          on a sorted version of the array. Here’s a concise breakdown of the overall process:
+          
+          Sorting the Array:
+          
+          First, the array arr is sorted in non-decreasing order. This sorting step allows us to use a two-pointer technique efficiently.
+          Two-Pointer Technique:
+          
+          Two pointers first and moving are initialized. first starts at the beginning of the array, and moving starts at the second element.
+          The function then enters a loop where it continuously adjusts the first and moving pointers to find a pair of elements
+          with the exact difference x.
+          Adjusting Pointers:
+          
+          If the pointers first and moving point to the same element, the moving pointer is incremented to ensure they refer
+          to different elements.
+          If the absolute difference between the elements at first and moving is less than x, the moving pointer is incremented
+          to increase the difference.
+          If the absolute difference is greater than x, the first pointer is incremented to decrease the difference.
+          If the absolute difference is exactly x, the function returns 1, indicating that such a pair exists.
+          No Pair Found:
+          
+          If the loop completes and no pair with the exact difference x is found, the function returns -1.
+          In essence, by sorting the array and using two pointers to traverse it, the function efficiently checks for the existence 
+          of a pair of elements with the specified difference. The combination of sorting and the two-pointer technique helps keep 
+          the solution both simple and efficient.
+-------------------------------------------------------------------------------------------------------------------------------------->
