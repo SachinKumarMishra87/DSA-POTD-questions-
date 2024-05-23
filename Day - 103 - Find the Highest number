@@ -1,0 +1,73 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Find the Highest number ??
+                  Given an integer array a[] of size n, find the highest element of the array. The array will either be strictly 
+                  increasing or strictly increasing and then strictly decreasing.
+
+Note: a[i] != a[i+1] 
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(log(n))
+Expected Space Complexity: O(1)
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input:
+11
+1 2 3 4 5 6 5 4 3 2 1
+Output: 
+6
+Explanation: 
+Highest element of array a[] is 6.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+5
+1 2 3 4 5
+Output:
+5
+Explanation: 
+Highest element of array a[] is 5.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution {
+public:
+     int findPeakElement(vector<int>& a) 
+    {
+        // Code here.
+        int l=0, r=a.size()-1;
+        int ans=0;
+        
+        while(l<=r){
+            int mid = (l+r)/2;
+            
+            ans = max(ans, a[mid]);
+            
+            if(a[mid]>a[r]){
+                r=mid-1;
+            } else{
+                l=mid+1;
+            }
+        }
+        return ans;
+    }
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+          
+          What the Code Does:
+          This code uses binary search to find a peak element in the array a. A peak element is one that is greater than
+          its neighbors. The function returns the value of such a peak element.
+          
+          Process:
+          Initialize and Perform Binary Search:
+          
+          Initialize l to 0 (the start of the array) and r to the last index of the array.
+          Initialize ans to 0 to store the maximum value found during the search.
+          While l is less than or equal to r:
+          Calculate the middle index mid as (l + r) / 2.
+          Update ans to be the maximum of ans and a[mid].
+          If a[mid] is greater than a[r], it means the peak might be on the left side, so set r to mid - 1.
+          Otherwise, the peak might be on the right side, so set l to mid + 1.
+          Return the Result:
+          
+          After the loop, return ans which holds the peak element found.
+-------------------------------------------------------------------------------------------------------------------------------------->
