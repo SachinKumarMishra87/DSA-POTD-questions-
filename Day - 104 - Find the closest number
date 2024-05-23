@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------------------------------------------------------------->
+Question -> Find the closest number ??
+                  Given a sorted array arr[] of positive integers. The task is to find the closest value in the array to the given number k.
+                  The array may contain duplicate values.
+                  
+                  Note: If the difference with k is the same for two values in the array return the greater value.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Expected Time Complexity: O(log(n)).
+Expected Auxiliary Space: O(1).
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 1:
+
+Input: 
+n = 4
+k = 4
+arr[] = {1, 3, 6, 7}
+Output: 
+3
+Explanation:
+We have array arr={1, 3, 6, 7} and target is 4. If we look at the absolute difference of target with every element of the array we 
+will get { |1-4|, |3-4|, |6-4|, |7-4| }  = {3, 1, 2, 3}. So, the closest number is 3.
+-------------------------------------------------------------------------------------------------------------------------------------->
+Example 2:
+
+Input:
+n = 7
+k = 4
+arr[] = {1, 2, 3, 5, 6, 8, 9}
+Output:
+5
+Explanation:
+The absolute difference of 4 is 1 from both 3 and 5. According to the question, we have to return greater value, which is 5.
+-------------------------------------------------------------------------------------------------------------------------------------->
+class Solution{
+    public:
+    int findClosest(int n, int k, int arr[]) { 
+        // Using lower_bound to find the position where 'k' would be inserted
+        int lb = lower_bound(arr, arr + n, k) - arr;
+        
+        // If the element at the lower bound is exactly 'k', return 'k'
+        if (arr[lb] == k) return k;
+        
+        // If the lower bound index is greater than 0, we need to compare with the previous element
+        if (lb > 0) {
+            // Compare the differences to find the closest element
+            if (k - arr[lb - 1] < arr[lb] - k) return arr[lb - 1];
+            else return arr[lb];
+        }
+        
+        // If the lower bound index is 0, the only option is the first element
+        return arr[lb];
+    } 
+};
+-------------------------------------------------------------------------------------------------------------------------------------->
+Approach ->
+          
+          Using lower_bound to Find Insertion Position:
+
+          lower_bound is a standard library function used to find the position where k would be inserted into the sorted array arr to maintain the sorted order.
+          lb stores the index where k would be inserted.
+          Check if k is Found Exactly at the Lower Bound:
+          
+          If the element at index lb is exactly equal to k, it means k is present in the array.
+          In this case, the function returns k as the closest element.
+          Handling Cases Where k is Not Found Exactly at Lower Bound:
+          
+          If the lower bound index lb is greater than 0, it means k would be inserted after the first element.
+          If k is not found at lb, the function compares the difference between k and the element before lb (arr[lb - 1]) with the difference between k and the element at lb.
+          If the difference between k and the previous element is less than the difference between k and the current element, then the previous element is closer to k, so the function returns arr[lb - 1].
+          Otherwise, the function returns the element at lb.
+          Handling Edge Case When lb is at the Beginning of the Array:
+          
+          If lb is 0, it means k would be inserted at the beginning of the array.
+          In this case, the only option for the closest element is the first element of the array, so the function returns arr[lb].
+          Return the Closest Element:
+          
+          If none of the above conditions are met, the function returns the element at the lower bound index lb, which is the closest element to k in the array.
+          This step-by-step breakdown explains how the function efficiently finds and returns the element closest to k in the sorted array.
+-------------------------------------------------------------------------------------------------------------------------------------->
